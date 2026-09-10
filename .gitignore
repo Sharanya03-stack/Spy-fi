@@ -1,0 +1,21 @@
+# Dependencies & Builds
+node_modules/
+.next/
+out/
+build/
+dist/
+
+# Python & ML
+ml/.venv/
+ml/data/raw/*.csv
+ml/data/processed/*.csv
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Environment & IDE
+.env*.local
+.vscode/
+.idea/
+*.swp
+.DS_Store

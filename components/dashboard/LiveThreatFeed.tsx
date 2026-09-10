@@ -1,0 +1,112 @@
+'use client';
+
+import React from 'react';
+import Link from 'next/link';
+import { ShieldAlert, ArrowRight, Clock, ShieldCheck } from 'lucide-react';
+import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/Card';
+import { Badge } from '@/components/ui/Badge';
+import { useSimulation } from '@/lib/simulation/simulationStore';
+
+function formatTimeAgo(isoString: string): string {
+  const seconds = Math.floor((Date.now() - new Date(isoString).getTime()) / 1000);
+  if (seconds < 10) return 'Just now';
+  if (seconds < 60) return `${seconds}s ago`;
+  const minutes = Math.floor(seconds / 60);
+  if (minutes < 60) return `${minutes}m ago`;
+  const hours = Math.floor(minutes / 60);
+  return `${hours}h ago`;
+}
+
+export const LiveThreatFeed: React.FC = () => {
+  const { threats } = useSimulation();
+
+  return (
+    <Card className="p-6">
+      <CardHeader className="flex flex-row items-center justify-between pb-4 mb-2 border-b border-slate-800/80">
+        <div>
+          <CardTitle className="text-base font-bold text-white flex items-center gap-2">
+            <ShieldAlert className="h-4 w-4 text-rose-400" />
+            LIVE THREAT FEED
+          </CardTitle>
+          <CardDescription className="text-xs text-slate-400 font-mono">
+            Real-time cybersecurity anomaly detections (Click alert for XAI details)
+          </CardDescription>
+        </div>
+
+        <Link
+          href="/threats"
+          className="text-xs font-mono text-emerald-400 hover:text-emerald-300 flex items-center gap-1 hover:underline"
+        >
+          View All ({threats.length}) <ArrowRight className="h-3.5 w-3.5" />
+        </Link>
+      </CardHeader>
+
+      <div className="space-y-3 mt-4">
+        {threats.length === 0 ? (
+          <div className="p-8 text-center border border-dashed border-slate-800 rounded-xl">
+            <ShieldCheck className="h-8 w-8 text-emerald-400 mx-auto mb-2 opacity-80" />
+            <p className="text-sm font-semibold text-slate-300">No active threats detected</p>
+            <p className="text-xs text-slate-500 font-mono mt-1">
+              Unidirectional network stream operating within baseline parameters
+            </p>
+          </div>
+        ) : (
+          threats.slice(0, 5).map((threat) => (
+            <Link
+              key={threat.id}
+              href={`/threats/${threat.id}`}
+              className="block group focus:outline-none"
+            >
+              <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800/80 hover:border-slate-700 hover:bg-slate-900 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3 group-hover:shadow-md">
+                
+                {/* Left: Severity & Title */}
+                <div className="flex items-start gap-3">
+                  <div className="mt-0.5">
+                    <Badge severity={threat.severity} size="sm" dot />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <h4 className="text-sm font-bold text-white group-hover:text-emerald-400 transition-colors">
+                        {threat.title}
+                      </h4>
+                      <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-950 text-slate-400 border border-slate-800">
+                        {threat.id}
+                      </span>
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-3 text-xs font-mono text-slate-400 mt-1">
+                      <span>
+                        Src: <strong className="text-slate-200">{threat.sourceIp}</strong>
+                      </span>
+                      <span>→</span>
+                      <span>
+                        Dst: <strong className="text-slate-200">{threat.destinationIp}</strong>
+                      </span>
+                      <span>•</span>
+                      <span>{threat.destinationPortCount} ports targeted</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right: Confidence & Time */}
+                <div className="flex items-center justify-between sm:justify-end gap-4 border-t sm:border-t-0 pt-2 sm:pt-0 border-slate-800/60 shrink-0 text-right">
+                  <div>
+                    <div className="text-xs font-mono text-emerald-400 font-bold">
+                      {threat.confidence}% AI Conf
+                    </div>
+                    <div className="text-[10px] font-mono text-slate-500 flex items-center justify-end gap-1 mt-0.5">
+                      <Clock className="h-3 w-3" /> {formatTimeAgo(threat.detectedAt)}
+                    </div>
+                  </div>
+
+                  <ArrowRight className="h-4 w-4 text-slate-600 group-hover:text-emerald-400 group-hover:translate-x-0.5 transition-all" />
+                </div>
+
+              </div>
+            </Link>
+          ))
+        )}
+      </div>
+    </Card>
+  );
+};

@@ -1,0 +1,4 @@
+Model,Macro_F1,Class_Weighting,Status
+RandomForestClassifier,0.6284,balanced,Candidate
+HistGradientBoostingClassifier,0.6288,balanced,Selected
+IsolationForest,0.72,N/A (Unsupervised),Baseline

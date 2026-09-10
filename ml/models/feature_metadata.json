@@ -1,0 +1,73 @@
+{
+  "model_name": "HistGradientBoostingClassifier",
+  "macro_f1_score": 0.6288,
+  "random_seed": 42,
+  "all_features": [
+    "flow_duration",
+    "packet_count",
+    "byte_count",
+    "packets_per_second",
+    "bytes_per_second",
+    "avg_packet_length",
+    "destination_port",
+    "source_port",
+    "protocol"
+  ],
+  "transformed_feature_names": [
+    "flow_duration",
+    "packet_count",
+    "byte_count",
+    "packets_per_second",
+    "bytes_per_second",
+    "avg_packet_length",
+    "destination_port",
+    "source_port",
+    "protocol_ICMP",
+    "protocol_TCP",
+    "protocol_UDP"
+  ],
+  "label_map": {
+    "0": "BENIGN",
+    "1": "PORT_SCAN",
+    "2": "DOS",
+    "3": "ANOMALY"
+  },
+  "benign_baselines": {
+    "flow_duration": {
+      "mean": 1.0704,
+      "std": 4.0057
+    },
+    "packet_count": {
+      "mean": 36.1167,
+      "std": 59.7776
+    },
+    "byte_count": {
+      "mean": 5463.5289,
+      "std": 14959.5488
+    },
+    "packets_per_second": {
+      "mean": 5434.6637,
+      "std": 34674.9709
+    },
+    "bytes_per_second": {
+      "mean": 1894462.2555,
+      "std": 16441715.4728
+    },
+    "avg_packet_length": {
+      "mean": 160.4428,
+      "std": 216.2216
+    },
+    "destination_port": {
+      "mean": 0.0,
+      "std": 1.0
+    },
+    "source_port": {
+      "mean": 0.0,
+      "std": 1.0
+    }
+  },
+  "candidate_f1_scores": {
+    "RandomForestClassifier": 0.6284,
+    "HistGradientBoostingClassifier": 0.6288
+  }
+}
