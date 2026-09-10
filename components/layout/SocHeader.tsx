@@ -23,6 +23,8 @@ import { StatusIndicator } from '@/components/ui/StatusIndicator';
 import { useSimulation } from '@/lib/simulation/simulationStore';
 import { ThreatType } from '@/lib/types/network';
 
+import { SpyFiLogo } from '@/components/ui/SpyFiLogo';
+
 export const SocHeader: React.FC = () => {
   const {
     isPaused,
@@ -62,13 +64,8 @@ export const SocHeader: React.FC = () => {
           
           {/* Left: Brand Logo + System Status */}
           <div className="flex items-center gap-6">
-            <Link href="/dashboard" className="flex items-center gap-2.5 group">
-              <div className="h-9 w-9 rounded-lg bg-emerald-950/90 border border-emerald-700/60 flex items-center justify-center text-emerald-400 group-hover:border-emerald-500 shadow-soc-glow transition-all">
-                <Shield className="h-5 w-5" />
-              </div>
-              <span className="font-bold text-lg text-white">
-                UniGuard <span className="text-emerald-400 font-mono text-sm">AI</span>
-              </span>
+            <Link href="/dashboard" className="rounded-xl">
+              <SpyFiLogo size="sm" />
             </Link>
 
             <div className="hidden lg:flex items-center gap-3">

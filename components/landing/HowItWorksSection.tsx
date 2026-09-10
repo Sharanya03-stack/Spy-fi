@@ -40,7 +40,7 @@ export const HowItWorksSection: React.FC = () => {
       <Container size="xl">
         <SectionHeading
           badge="ARCHITECTURE PIPELINE"
-          title="How UniGuard AI Defends One-Way Flows"
+          title="How Spy-fi Defends One-Way Flows"
           subtitle="A streamlined 4-step machine learning pipeline designed to inspect one-way traffic with zero operational latency."
         />
 

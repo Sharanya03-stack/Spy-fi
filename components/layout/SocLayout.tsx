@@ -22,7 +22,7 @@ function SocLayoutInner({ children }: { children: React.ReactNode }) {
       <ToastContainer toast={activeToast} onClose={dismissToast} />
 
       <footer className="py-4 border-t border-slate-900 text-center text-xs font-mono text-slate-500">
-        UniGuard AI • Unidirectional IP Network Telemetry & Threat Defense Console
+        Spy-fi • Unidirectional IP Network Telemetry & Threat Defense Console
       </footer>
     </div>
   );

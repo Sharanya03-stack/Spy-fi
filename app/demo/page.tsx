@@ -86,7 +86,7 @@ function SihDemoContent() {
               </span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight flex items-center gap-3">
-              UNIGUARD AI — SIH DEMONSTRATION CONSOLE
+              SPY-FI — SIH DEMONSTRATION CONSOLE
             </h1>
             <p className="text-xs font-mono text-slate-400 mt-1 max-w-2xl">
               AI-Based Detection of Cyber Threats in Unidirectional IP Traffic Telemetry
@@ -407,7 +407,7 @@ function SihDemoContent() {
             {/* Node 3: AI Engine */}
             <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
               <span className="text-[10px] text-slate-500 uppercase block font-bold">NODE 02</span>
-              <span className="text-emerald-400 font-bold block">UNIGUARD AI ENGINE</span>
+              <span className="text-emerald-400 font-bold block">SPY-FI AI ENGINE</span>
               <span className="text-[10px] text-slate-400 font-sans block">
                 {isRealMl ? 'HistGradientBoosting ML' : 'Simulation Engine'}
               </span>
@@ -428,7 +428,7 @@ function SihDemoContent() {
       <Card className="p-6 space-y-4">
         <div className="border-b border-slate-800 pb-3">
           <h3 className="text-xs font-mono font-bold text-slate-200 uppercase tracking-wider flex items-center gap-2">
-            <FileText className="h-4 w-4 text-emerald-400" /> HOW UNIGUARD AI ADDRESSES PROBLEM STATEMENT 145
+            <FileText className="h-4 w-4 text-emerald-400" /> HOW SPY-FI ADDRESSES PROBLEM STATEMENT 145
           </h3>
           <p className="text-xs font-sans text-slate-400 mt-1">
             Smart India Hackathon 2026 — AI-Based Detection of Cyber Threats in Unidirectional IP Network Traffic

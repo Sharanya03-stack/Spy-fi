@@ -8,7 +8,7 @@ import { Badge } from '@/components/ui/Badge';
 
 export const LoginCard: React.FC = () => {
   const router = useRouter();
-  const [email, setEmail] = useState('analyst@uniguard.soc');
+  const [email, setEmail] = useState('analyst@spy-fi.soc');
   const [password, setPassword] = useState('••••••••••••');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -54,7 +54,7 @@ export const LoginCard: React.FC = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full rounded-lg bg-slate-950 border border-slate-800 px-4 py-2.5 pl-10 text-sm text-slate-100 placeholder-slate-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 font-mono transition-all"
-              placeholder="analyst@uniguard.soc"
+              placeholder="analyst@spy-fi.soc"
               required
             />
           </div>

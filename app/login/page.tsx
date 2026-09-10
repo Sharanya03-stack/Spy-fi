@@ -4,6 +4,7 @@ import { Shield, ArrowLeft, ShieldCheck, Activity, Brain } from 'lucide-react';
 import { PageTransition } from '@/components/ui/PageTransition';
 import { LoginCard } from '@/components/auth/LoginCard';
 import { Container } from '@/components/ui/Container';
+import { SpyFiLogo } from '@/components/ui/SpyFiLogo';
 
 export default function LoginPage() {
   return (
@@ -15,13 +16,8 @@ export default function LoginPage() {
       <header className="p-6 border-b border-slate-900/80 relative z-20">
         <Container size="xl">
           <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center gap-2.5 group">
-              <div className="h-9 w-9 rounded-lg bg-emerald-950/80 border border-emerald-700/60 flex items-center justify-center text-emerald-400">
-                <Shield className="h-5 w-5" />
-              </div>
-              <span className="font-bold text-lg text-white">
-                UniGuard <span className="text-emerald-400 font-mono text-sm">AI</span>
-              </span>
+            <Link href="/" className="inline-block">
+              <SpyFiLogo size="sm" showSubtitle={false} />
             </Link>
 
             <Link
@@ -90,7 +86,7 @@ export default function LoginPage() {
 
       {/* Footer */}
       <footer className="p-6 border-t border-slate-900 text-center text-xs font-mono text-slate-500 relative z-20">
-        © 2026 UniGuard AI. Prototype developed for Smart India Hackathon 2026.
+        © 2026 Spy-fi. Prototype developed for Smart India Hackathon 2026.
       </footer>
     </PageTransition>
   );

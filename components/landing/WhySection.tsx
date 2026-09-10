@@ -11,7 +11,7 @@ export const WhySection: React.FC = () => {
       icon: Eye,
       title: 'Continuous Monitoring',
       description:
-        'Unidirectional data diodes protect against physical return vectors, but incoming traffic streams can still conceal hidden reconnaissance, payloads, or protocol abuse. UniGuard AI maintains uninterrupted packet inspection at full line speed.',
+        'Unidirectional data diodes protect against physical return vectors, but incoming traffic streams can still conceal hidden reconnaissance, payloads, or protocol abuse. Spy-fi maintains uninterrupted packet inspection at full line speed.',
     },
     {
       num: '02',
@@ -25,7 +25,7 @@ export const WhySection: React.FC = () => {
       icon: ShieldAlert,
       title: 'Explainable Security Intelligence',
       description:
-        'Black-box alerts create SOC fatigue and delay response. UniGuard AI explicitly details why traffic was flagged — displaying connection counts, targeted ports, anomaly scores, and clear remediation guidelines.',
+        'Black-box alerts create SOC fatigue and delay response. Spy-fi explicitly details why traffic was flagged — displaying connection counts, targeted ports, anomaly scores, and clear remediation guidelines.',
     },
   ];
 
@@ -33,7 +33,7 @@ export const WhySection: React.FC = () => {
     <section className="py-24 bg-slate-950 relative">
       <Container size="xl">
         <SectionHeading
-          badge="WHY UNIGUARD AI"
+          badge="WHY SPY-FI"
           title="Security Doesn't Stop at the Network Boundary"
           subtitle="Unidirectional architectures significantly reduce attack surfaces, but one-way traffic entering high-security environments can still carry malicious intent or protocol anomalies."
         />

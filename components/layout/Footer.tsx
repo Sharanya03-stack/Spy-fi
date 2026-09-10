@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Shield, ExternalLink, Activity } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
+import { SpyFiLogo } from '@/components/ui/SpyFiLogo';
 
 export const Footer: React.FC = () => {
   return (
@@ -10,13 +11,8 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-10 mb-12">
           {/* Brand Col */}
           <div className="md:col-span-2 space-y-4">
-            <Link href="/" className="flex items-center gap-2.5">
-              <div className="h-8 w-8 rounded-lg bg-emerald-950/80 border border-emerald-700/60 flex items-center justify-center text-emerald-400">
-                <Shield className="h-4 w-4" />
-              </div>
-              <span className="font-bold text-lg tracking-tight text-white">
-                UniGuard <span className="text-emerald-400 font-mono text-sm">AI</span>
-              </span>
+            <Link href="/" className="inline-block">
+              <SpyFiLogo size="sm" showSubtitle={false} />
             </Link>
             <p className="text-sm text-slate-400 leading-relaxed max-w-sm">
               AI-powered security intelligence and anomaly detection engineered specifically for high-assurance unidirectional IP network traffic.
@@ -104,7 +100,7 @@ export const Footer: React.FC = () => {
 
         {/* Bottom copyright */}
         <div className="pt-8 border-t border-slate-900/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-slate-500">
-          <p>© 2026 UniGuard AI. Built for Smart India Hackathon 2026 (Problem Statement 145).</p>
+          <p>© 2026 Spy-fi. Built for Smart India Hackathon 2026 (Problem Statement 145).</p>
           <div className="flex items-center gap-4">
             <span className="hover:text-slate-400 transition-colors cursor-pointer">Privacy Protocol</span>
             <span>•</span>

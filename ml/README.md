@@ -1,4 +1,4 @@
-# UniGuard AI — Machine Learning Threat Detection Engine
+# Spy-fi — Machine Learning Threat Detection Engine
 
 **Smart India Hackathon 2026 — Problem Statement 145**
 
@@ -23,7 +23,7 @@ AI-powered cybersecurity machine learning pipeline for detecting, classifying, a
 
 Standard intrusion detection systems rely on bi-directional flow inspection (measuring client-to-server and server-to-client handshakes). In **unidirectional IP networks (data diodes)**, return traffic is hardware-blocked or physically impossible.
 
-UniGuard AI evaluates features **strictly compatible with one-way ingress telemetry**:
+Spy-fi evaluates features **strictly compatible with one-way ingress telemetry**:
 - `flow_duration`: Stream duration in seconds (`dur`)
 - `packet_count`: Ingress packet volume sent across diode (`spkts`)
 - `byte_count`: Ingress byte payload transmitted (`sbytes`)
@@ -41,7 +41,7 @@ UniGuard AI evaluates features **strictly compatible with one-way ingress teleme
 
 - **Total Flow Records**: **257,673** (Train split: 205,700 | Test split: 51,426)
 - **Feature Space**: 36 native features mapped to 10 unidirectional IP features
-- **UniGuard Class Distribution**:
+- **Spy-fi Class Distribution**:
   - `BENIGN` (Normal traffic): **93,000** records (36.09%)
   - `ANOMALY` (Generic, Fuzzers, Shellcode, Backdoors, Worms): **87,131** records (33.81%)
   - `BRUTE_FORCE` (Exploits, Analysis): **47,202** records (18.32%)
@@ -162,7 +162,7 @@ python -m pytest tests/
 
 ## Standardized Inference Response Contract
 
-The Python engine outputs JSON matching the UniGuard AI SOC TypeScript interface:
+The Python engine outputs JSON matching the Spy-fi SOC TypeScript interface:
 
 ```json
 {

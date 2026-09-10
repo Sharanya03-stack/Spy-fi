@@ -51,7 +51,7 @@ export const ThreatDetectionSection: React.FC = () => {
         <SectionHeading
           badge="THREAT CLASSIFICATION MATRIX"
           title="AI Threat Detection Capabilities"
-          subtitle="UniGuard AI evaluates incoming unidirectional network flows against four core cybersecurity threat vectors."
+          subtitle="Spy-fi evaluates incoming unidirectional network flows against four core cybersecurity threat vectors."
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

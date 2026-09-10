@@ -7,6 +7,8 @@ import { Button } from '@/components/ui/Button';
 import { Container } from '@/components/ui/Container';
 import { cn } from '@/lib/utils/cn';
 
+import { SpyFiLogo } from '@/components/ui/SpyFiLogo';
+
 export const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -44,19 +46,9 @@ export const Navbar: React.FC = () => {
           {/* Brand Logo */}
           <Link
             href="/"
-            className="flex items-center gap-2.5 group focus:outline-none focus:ring-2 focus:ring-emerald-500/50 rounded-lg p-1"
+            className="focus:outline-none focus:ring-2 focus:ring-emerald-500/50 rounded-xl"
           >
-            <div className="h-9 w-9 rounded-lg bg-emerald-950/80 border border-emerald-700/60 flex items-center justify-center text-emerald-400 group-hover:border-emerald-500 group-hover:shadow-soc-glow transition-all">
-              <Shield className="h-5 w-5" />
-            </div>
-            <div className="flex flex-col">
-              <span className="font-bold text-lg tracking-tight text-white flex items-center gap-1.5">
-                UniGuard <span className="text-emerald-400 font-mono text-sm font-semibold px-1.5 py-0.5 rounded bg-emerald-950/90 border border-emerald-800/80">AI</span>
-              </span>
-              <span className="text-[10px] font-mono text-slate-400 tracking-wider uppercase -mt-0.5">
-                Unidirectional Security
-              </span>
-            </div>
+            <SpyFiLogo />
           </Link>
 
           {/* Desktop Nav Links */}

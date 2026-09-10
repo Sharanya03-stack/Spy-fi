@@ -1,5 +1,5 @@
 """
-UniGuard AI - FastAPI Threat Detection REST Service
+Spy-fi - FastAPI Threat Detection REST Service
 Smart India Hackathon 2026 Problem Statement 145
 
 Exposes real UNSW-NB15 trained Machine Learning Threat Engine via REST API endpoints.
@@ -33,7 +33,7 @@ logging.basicConfig(
     format="%(asctime)s [%(levelname)s] %(message)s",
     handlers=[logging.StreamHandler(sys.stdout)],
 )
-logger = logging.getLogger("uniguard_api")
+logger = logging.getLogger("spyfi_api")
 
 # Global Predictor Instance (Loaded ONCE at startup)
 predictor_instance: Optional[ThreatPredictor] = None
@@ -46,7 +46,7 @@ async def lifespan(app: FastAPI):
     Loads trained model artifacts ONCE at startup.
     """
     global predictor_instance
-    logger.info("Initializing UniGuard AI FastAPI Service...")
+    logger.info("Initializing Spy-fi FastAPI Service...")
     logger.info(f"Checking for model artifacts at {MODEL_PATH} and {PREPROCESSOR_PATH}...")
 
     if not MODEL_PATH.exists() or not PREPROCESSOR_PATH.exists():
@@ -73,11 +73,11 @@ async def lifespan(app: FastAPI):
 
     yield
 
-    logger.info("Shutting down UniGuard AI FastAPI Service...")
+    logger.info("Shutting down Spy-fi FastAPI Service...")
 
 
 app = FastAPI(
-    title="UniGuard AI - Threat Detection ML API",
+    title="Spy-fi - Threat Detection ML API",
     description="Real-time Machine Learning Threat Detection API for Unidirectional IP Network Telemetry (UNSW-NB15 Trained Model)",
     version="1.0.0",
     lifespan=lifespan,
@@ -118,7 +118,7 @@ async def global_exception_handler(request: Request, exc: Exception):
 @app.get("/", include_in_schema=False)
 async def root():
     return {
-        "service": "UniGuard AI Threat Detection Engine",
+        "service": "Spy-fi Threat Detection Engine",
         "docs": "/docs",
         "health": "/health",
         "predict": "/api/v1/predict",

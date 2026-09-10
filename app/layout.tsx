@@ -15,7 +15,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'UniGuard AI — AI-Powered Defense for One-Way Networks',
+  title: 'Spy-fi — AI-Powered Defense for One-Way Networks',
   description:
     'Detect anomalous traffic, identify cyber threats, and understand the reasoning behind every alert in unidirectional IP network traffic.',
   keywords: [

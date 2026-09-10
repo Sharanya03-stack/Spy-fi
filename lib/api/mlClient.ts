@@ -1,5 +1,5 @@
 /**
- * UniGuard AI - FastAPI ML Client Library
+ * Spy-fi - FastAPI ML Client Library
  * Smart India Hackathon 2026 Problem Statement 145
  *
  * Dedicated client module managing HTTP communications with Python FastAPI ML Threat Service.

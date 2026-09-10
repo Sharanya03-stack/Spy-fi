@@ -120,7 +120,7 @@ function ReportsContent() {
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-bold px-2.5 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800">
-                        UNIGUARD AI
+                        SPY-FI
                       </span>
                       <span className="text-xs text-slate-400 font-bold">OFFICIAL SOC INCIDENT REPORT</span>
                     </div>
