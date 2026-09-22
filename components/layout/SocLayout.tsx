@@ -4,10 +4,10 @@ import React from 'react';
 import { SocHeader } from './SocHeader';
 import { SocNavigation } from './SocNavigation';
 import { ToastContainer } from '@/components/ui/Toast';
-import { SimulationProvider, useSimulation } from '@/lib/simulation/simulationStore';
+import { useSimulation } from '@/lib/simulation/simulationStore';
 import { PageTransition } from '@/components/ui/PageTransition';
 
-function SocLayoutInner({ children }: { children: React.ReactNode }) {
+export const SocLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { activeToast, dismissToast } = useSimulation();
 
   return (
@@ -25,13 +25,5 @@ function SocLayoutInner({ children }: { children: React.ReactNode }) {
         Spy-fi • Unidirectional IP Network Telemetry & Threat Defense Console
       </footer>
     </div>
-  );
-}
-
-export const SocLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  return (
-    <SimulationProvider>
-      <SocLayoutInner>{children}</SocLayoutInner>
-    </SimulationProvider>
   );
 };
