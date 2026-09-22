@@ -32,6 +32,67 @@ export interface NetworkTraffic {
   threatId?: string;
 }
 
+export type ResponsePlanStatus =
+  | 'PENDING'
+  | 'APPROVED'
+  | 'REJECTED'
+  | 'MODIFIED'
+  | 'EXECUTED'
+  | 'VERIFYING'
+  | 'VERIFIED'
+  | 'VERIFICATION_FAILED';
+
+export interface VerificationCriteria {
+  metricName: string;
+  unit: string;
+  baselineValue: number;
+  targetThreshold: number;
+  actualPostValue?: number;
+  conditionDescription: string;
+}
+
+export interface AiResponsePlan {
+  id: string;
+  threatType: ThreatType;
+  severity: Severity;
+  originalProposedAction: string;
+  analystModifiedAction?: string;
+  reason: string;
+  supportingEvidence: string[];
+  expectedEffect: string;
+  operationalImpact: string;
+  confidenceContext: string;
+  analystApprovalRequired: boolean;
+  executionMode: 'CONTROLLED_SIMULATION' | 'NONE';
+  status: ResponsePlanStatus;
+  verificationCriteria: VerificationCriteria;
+  beforeMetricDisplay?: string;
+  afterMetricDisplay?: string;
+  createdTimestamp: string;
+  approvedTimestamp?: string;
+  executedTimestamp?: string;
+  verifiedTimestamp?: string;
+  rejectionReason?: string;
+}
+
+export interface ResponseTimelineEntry {
+  id: string;
+  timestamp: string;
+  title: string;
+  description: string;
+  actor: 'AI-Assisted Planner' | 'SOC Analyst' | 'Controlled Simulator' | 'Verification Engine';
+  type:
+    | 'DETECTED'
+    | 'CLASSIFIED'
+    | 'RISK_ASSESSED'
+    | 'PLAN_GENERATED'
+    | 'ANALYST_REVIEW'
+    | 'DECISION'
+    | 'EXECUTION'
+    | 'VERIFICATION'
+    | 'STATUS_CHANGE';
+}
+
 export interface ThreatEvent {
   id: string;
   threatType: ThreatType;
@@ -60,6 +121,8 @@ export interface ThreatEvent {
     description: string;
   }>;
   recommendedActionsList?: string[];
+  responsePlan?: AiResponsePlan;
+  responseHistory?: ResponseTimelineEntry[];
 }
 
 export interface IncidentTimelineStep {

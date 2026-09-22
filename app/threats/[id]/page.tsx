@@ -15,6 +15,7 @@ import { AiExplanationCard } from '@/components/investigation/AiExplanationCard'
 import { RiskAssessmentCard } from '@/components/investigation/RiskAssessmentCard';
 import { IncidentTimeline } from '@/components/investigation/IncidentTimeline';
 import { RecommendedResponseCard } from '@/components/investigation/RecommendedResponseCard';
+import { AiResponsePanel } from '@/components/investigation/AiResponsePanel';
 import { RelatedTrafficTable } from '@/components/investigation/RelatedTrafficTable';
 import { ShieldAlert, ArrowLeft, AlertCircle, Cpu } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
@@ -74,6 +75,9 @@ function ThreatInvestigationWorkspace() {
 
       {/* AI Detection Summary Banner (WHY, HOW CONFIDENT, HOW SUSPICIOUS) */}
       <AiDetectionSummary threat={threat} />
+
+      {/* Human-In-The-Loop AI Response Planner & Consent Panel */}
+      <AiResponsePanel threat={threat} />
 
       {/* Main Workspace 2-Column Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">

@@ -8,11 +8,17 @@ import {
   TrafficMetrics,
   ThreatStatus,
   Severity,
+  AiResponsePlan,
+  ResponseTimelineEntry,
 } from '@/lib/types/network';
 import {
   generateNormalTraffic,
   generateSimulatedThreat,
 } from './simulationEngine';
+import {
+  generateResponsePlan,
+  createInitialResponseHistory,
+} from './responsePlanner';
 import {
   checkMlHealth,
   predictTelemetry,
@@ -51,6 +57,9 @@ export interface SimulationContextType {
   resetDemo: () => void;
   dismissToast: () => void;
   updateThreatStatus: (id: string, status: ThreatStatus) => void;
+  approveAndExecuteResponse: (threatId: string) => Promise<void>;
+  modifyResponsePlan: (threatId: string, customAction: string) => void;
+  rejectResponsePlan: (threatId: string, reason?: string) => void;
 }
 
 const SimulationContext = createContext<SimulationContextType | undefined>(undefined);
@@ -62,13 +71,27 @@ function randomChoice<T>(arr: T[]): T {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
+function attachResponsePlan(threat: ThreatEvent): ThreatEvent {
+  if (threat.responsePlan && threat.responseHistory) {
+    return threat;
+  }
+  const plan = generateResponsePlan(threat);
+  const history = createInitialResponseHistory(threat, plan);
+  return {
+    ...threat,
+    responsePlan: plan,
+    responseHistory: history,
+  };
+}
+
 function createSeedThreats(): ThreatEvent[] {
-  return [
+  const seedList: ThreatEvent[] = [
     { ...generateSimulatedThreat('PORT_SCAN', '192.168.1.25', '10.0.0.12'), detectionSource: 'simulation' },
     { ...generateSimulatedThreat('TRAFFIC_ANOMALY', '10.0.0.42', '10.0.0.5'), detectionSource: 'simulation' },
     { ...generateSimulatedThreat('DOS_DDOS', '172.16.4.12', '10.0.0.88'), detectionSource: 'simulation' },
     { ...generateSimulatedThreat('BRUTE_FORCE', '192.168.1.108', '10.0.0.45'), detectionSource: 'simulation' },
   ];
+  return seedList.map(attachResponsePlan);
 }
 
 function createSeedTraffic(): NetworkTraffic[] {
@@ -227,10 +250,11 @@ export const SimulationProvider: React.FC<{ children: React.ReactNode }> = ({ ch
 
   // Action: Trigger Manual Threat Simulation
   const simulateThreat = useCallback((type: ThreatType): ThreatEvent => {
-    const newThreat: ThreatEvent = {
+    const rawThreat: ThreatEvent = {
       ...generateSimulatedThreat(type),
       detectionSource: 'simulation',
     };
+    const newThreat = attachResponsePlan(rawThreat);
     
     setThreats((prev) => [newThreat, ...prev].slice(0, MAX_THREATS_COUNT));
 
@@ -291,6 +315,163 @@ export const SimulationProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     );
   }, []);
 
+  // AI-Assisted Response Lifecycle Actions (HUMAN-IN-THE-LOOP CONTROLLED SIMULATION)
+  const approveAndExecuteResponse = useCallback(async (threatId: string) => {
+    setThreats((prev) =>
+      prev.map((t) => {
+        if (t.id !== threatId || !t.responsePlan) return t;
+
+        const currentPlan = t.responsePlan;
+        const actionToExecute = currentPlan.analystModifiedAction || currentPlan.originalProposedAction;
+        const now = new Date().toISOString();
+
+        // 1. Decision audit entry
+        const decisionEvent: ResponseTimelineEntry = {
+          id: `EVT-DEC-${Date.now()}`,
+          timestamp: now,
+          title: currentPlan.analystModifiedAction ? 'Analyst Approved Modified Response Plan' : 'Analyst Approved AI Response Plan',
+          description: `SOC Analyst approved controlled execution of action: "${actionToExecute}".`,
+          actor: 'SOC Analyst',
+          type: 'DECISION',
+        };
+
+        // 2. Dynamic before/after metric calculation based on threat type
+        let beforeDisplay = '';
+        let afterDisplay = '';
+        let postValue = 0;
+
+        if (t.threatType === 'DOS' || t.threatType === 'DOS_DDOS') {
+          const basePkt = currentPlan.verificationCriteria.baselineValue || 28400;
+          postValue = Math.round(basePkt * 0.25);
+          beforeDisplay = `${basePkt.toLocaleString()} pkt/s`;
+          afterDisplay = `${postValue.toLocaleString()} pkt/s (-75.0%)`;
+        } else if (t.threatType === 'PORT_SCAN') {
+          const baseProb = currentPlan.verificationCriteria.baselineValue || 180;
+          postValue = 2;
+          beforeDisplay = `${baseProb} probing attempts/min`;
+          afterDisplay = `${postValue} probing attempts/min (-98.9%)`;
+        } else if (t.threatType === 'BRUTE_FORCE') {
+          const baseAuth = currentPlan.verificationCriteria.baselineValue || 25;
+          postValue = 1;
+          beforeDisplay = `${baseAuth} auth attempts/min`;
+          afterDisplay = `${postValue} auth attempt/min (-96.0%)`;
+        } else {
+          const baseScore = currentPlan.verificationCriteria.baselineValue || t.riskScore;
+          postValue = Math.min(25, Math.round(baseScore * 0.28));
+          beforeDisplay = `${baseScore} Baseline Suspicion`;
+          afterDisplay = `${postValue} Baseline Suspicion (-72%)`;
+        }
+
+        // 3. Execution audit entry
+        const executionEvent: ResponseTimelineEntry = {
+          id: `EVT-EXEC-${Date.now()}`,
+          timestamp: new Date(Date.now() + 500).toISOString(),
+          title: 'Controlled Simulation Response Executed',
+          description: `Action executed in controlled simulation mode. Rate limiting / policy applied. Zero real network interfaces modified.`,
+          actor: 'Controlled Simulator',
+          type: 'EXECUTION',
+        };
+
+        // 4. Verification audit entry
+        const verificationEvent: ResponseTimelineEntry = {
+          id: `EVT-VER-${Date.now()}`,
+          timestamp: new Date(Date.now() + 1200).toISOString(),
+          title: 'Mitigation Verification Result: SUCCESS',
+          description: `Post-response telemetry satisfies verification threshold (${currentPlan.verificationCriteria.metricName}: ${beforeDisplay} → ${afterDisplay}). Monitoring continues.`,
+          actor: 'Verification Engine',
+          type: 'VERIFICATION',
+        };
+
+        const updatedPlan: AiResponsePlan = {
+          ...currentPlan,
+          status: 'VERIFIED',
+          beforeMetricDisplay: beforeDisplay,
+          afterMetricDisplay: afterDisplay,
+          approvedTimestamp: now,
+          executedTimestamp: executionEvent.timestamp,
+          verifiedTimestamp: verificationEvent.timestamp,
+          verificationCriteria: {
+            ...currentPlan.verificationCriteria,
+            actualPostValue: postValue,
+          },
+        };
+
+        const updatedHistory = [
+          ...(t.responseHistory || []),
+          decisionEvent,
+          executionEvent,
+          verificationEvent,
+        ];
+
+        return {
+          ...t,
+          responsePlan: updatedPlan,
+          responseHistory: updatedHistory,
+        };
+      })
+    );
+  }, []);
+
+  const modifyResponsePlan = useCallback((threatId: string, customAction: string) => {
+    setThreats((prev) =>
+      prev.map((t) => {
+        if (t.id !== threatId || !t.responsePlan) return t;
+
+        const now = new Date().toISOString();
+        const modifyEvent: ResponseTimelineEntry = {
+          id: `EVT-MOD-${Date.now()}`,
+          timestamp: now,
+          title: 'AI Response Plan Modified by Analyst',
+          description: `SOC Analyst modified proposed response to: "${customAction}". Original plan preserved.`,
+          actor: 'SOC Analyst',
+          type: 'ANALYST_REVIEW',
+        };
+
+        const updatedPlan: AiResponsePlan = {
+          ...t.responsePlan,
+          analystModifiedAction: customAction,
+          status: 'MODIFIED',
+        };
+
+        return {
+          ...t,
+          responsePlan: updatedPlan,
+          responseHistory: [...(t.responseHistory || []), modifyEvent],
+        };
+      })
+    );
+  }, []);
+
+  const rejectResponsePlan = useCallback((threatId: string, reason?: string) => {
+    setThreats((prev) =>
+      prev.map((t) => {
+        if (t.id !== threatId || !t.responsePlan) return t;
+
+        const now = new Date().toISOString();
+        const rejectEvent: ResponseTimelineEntry = {
+          id: `EVT-REJ-${Date.now()}`,
+          timestamp: now,
+          title: 'AI Response Plan Rejected',
+          description: `SOC Analyst rejected proposed response plan. Reason: ${reason || 'Analyst override — manual investigation chosen.'}`,
+          actor: 'SOC Analyst',
+          type: 'DECISION',
+        };
+
+        const updatedPlan: AiResponsePlan = {
+          ...t.responsePlan,
+          status: 'REJECTED',
+          rejectionReason: reason || 'Analyst override — manual investigation chosen.',
+        };
+
+        return {
+          ...t,
+          responsePlan: updatedPlan,
+          responseHistory: [...(t.responseHistory || []), rejectEvent],
+        };
+      })
+    );
+  }, []);
+
   // Background Stream Generator (Supports BOTH Simulation & Real ML Inference Modes)
   useEffect(() => {
     if (isPaused) return;
@@ -328,7 +509,7 @@ export const SimulationProvider: React.FC<{ children: React.ReactNode }> = ({ ch
             else if (mlRes.threat_type === 'DOS') mappedType = 'DOS_DDOS';
             else if (mlRes.threat_type === 'BRUTE_FORCE') mappedType = 'BRUTE_FORCE';
 
-            const mlThreat: ThreatEvent = {
+            const rawMlThreat: ThreatEvent = {
               id: `THR-${dateStr}-${hexId}`,
               threatType: mappedType,
               title: `Real ML Alert: ${mlRes.threat_type}`,
@@ -350,6 +531,8 @@ export const SimulationProvider: React.FC<{ children: React.ReactNode }> = ({ ch
               explanationDetails: mlRes.explanation,
               recommendedActionsList: mlRes.recommended_action,
             };
+
+            const mlThreat = attachResponsePlan(rawMlThreat);
 
             setThreats((prev) => [mlThreat, ...prev].slice(0, MAX_THREATS_COUNT));
 
@@ -382,10 +565,10 @@ export const SimulationProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         if (isRandomAnomaly) {
           const types: ThreatType[] = ['PORT_SCAN', 'TRAFFIC_ANOMALY', 'BRUTE_FORCE'];
           const randomType = types[Math.floor(Math.random() * types.length)];
-          const threat = {
+          const threat = attachResponsePlan({
             ...generateSimulatedThreat(randomType),
             detectionSource: 'simulation' as const,
-          };
+          });
           
           setThreats((prev) => [threat, ...prev].slice(0, MAX_THREATS_COUNT));
           
@@ -434,6 +617,9 @@ export const SimulationProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         resetDemo,
         dismissToast,
         updateThreatStatus,
+        approveAndExecuteResponse,
+        modifyResponsePlan,
+        rejectResponsePlan,
       }}
     >
       {children}
