@@ -14,10 +14,7 @@ export const ThreatSummaryCards: React.FC = () => {
   const simCount = threats.filter((t) => t.detectionSource === 'simulation').length;
   const critical = threats.filter((t) => t.severity === 'CRITICAL').length;
   const high = threats.filter((t) => t.severity === 'HIGH').length;
-  const medium = threats.filter((t) => t.severity === 'MEDIUM').length;
-  const low = threats.filter((t) => t.severity === 'LOW').length;
 
-  // Calculate Top Threat Type dynamically
   const typeCounts: Record<string, number> = {};
   threats.forEach((t) => {
     const formattedType = t.threatType.replace('_', ' ');
@@ -34,11 +31,11 @@ export const ThreatSummaryCards: React.FC = () => {
 
   if (total === 0) {
     return (
-      <Card className="p-6 text-center border-slate-800 bg-slate-900/60">
-        <ShieldCheck className="h-8 w-8 text-emerald-400 mx-auto mb-2" />
-        <h3 className="text-sm font-mono font-bold text-slate-200 uppercase">NO ACTIVE THREATS</h3>
+      <Card className="p-6 text-center border-slate-800/80 bg-[#0F1623]">
+        <ShieldCheck className="h-8 w-8 text-emerald-400 mx-auto mb-2 opacity-90" />
+        <h3 className="text-sm font-mono font-bold text-slate-200 uppercase">NO ACTIVE THREAT INCIDENTS</h3>
         <p className="text-xs font-mono text-slate-400 mt-1">
-          No suspicious traffic has been detected. Continue monitoring the network telemetry stream.
+          Network telemetry is within baseline operating parameters. Trigger a simulation attack to test response flows.
         </p>
       </Card>
     );
@@ -48,26 +45,29 @@ export const ThreatSummaryCards: React.FC = () => {
     {
       label: 'TOTAL THREATS',
       value: total,
-      subtext: 'Cumulative Active Incidents',
+      subtext: 'Active Security Incidents',
       icon: ShieldAlert,
       color: 'text-slate-200',
-      bgColor: 'bg-slate-800 border-slate-700',
+      bgColor: 'bg-slate-900 border-slate-800',
+      accent: 'border-l-slate-600',
     },
     {
-      label: 'REAL ML DETECTIONS',
+      label: 'REAL ML INFERENCES',
       value: realMlCount,
-      subtext: 'UNSW-NB15 Model Inference',
+      subtext: 'UNSW-NB15 Model Stream',
       icon: Cpu,
       color: 'text-emerald-400',
       bgColor: 'bg-emerald-950/80 border-emerald-700/60',
+      accent: 'border-l-emerald-500',
     },
     {
-      label: 'SIMULATION DETECTIONS',
+      label: 'SIMULATION THREATS',
       value: simCount,
-      subtext: 'Demo Engine Stream',
+      subtext: 'Controlled Demo Engine',
       icon: Activity,
       color: 'text-sky-400',
       bgColor: 'bg-sky-950/60 border-sky-800/60',
+      accent: 'border-l-sky-500',
     },
     {
       label: 'CRITICAL / HIGH',
@@ -76,22 +76,24 @@ export const ThreatSummaryCards: React.FC = () => {
       icon: AlertTriangle,
       color: 'text-rose-400',
       bgColor: 'bg-rose-950/60 border-rose-800/60',
+      accent: 'border-l-rose-500',
     },
     {
-      label: 'TOP THREAT TYPE',
+      label: 'TOP THREAT VECTOR',
       isText: true,
       textValue: topType,
-      subtext: `${maxCount} Occurrences`,
+      subtext: `${maxCount} Detections`,
       icon: Flame,
-      color: 'text-orange-400',
-      bgColor: 'bg-orange-950/60 border-orange-800/60',
+      color: 'text-amber-400',
+      bgColor: 'bg-amber-950/60 border-amber-800/60',
+      accent: 'border-l-amber-500',
     },
   ];
 
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between text-xs font-mono text-slate-400 uppercase tracking-wider px-1">
-        <span className="font-bold text-slate-300">THREAT INTELLIGENCE SUMMARY</span>
+        <span className="font-bold text-slate-300">THREAT INTELLIGENCE OVERVIEW</span>
         <span>
           {realMlCount} Real ML | {simCount} Simulation
         </span>
@@ -101,19 +103,19 @@ export const ThreatSummaryCards: React.FC = () => {
         {cards.map((c, i) => {
           const Icon = c.icon;
           return (
-            <Card key={i} className="p-3.5 flex flex-col justify-between hover:border-slate-700 transition-all">
+            <Card key={i} className={`p-3.5 flex flex-col justify-between border-l-4 ${c.accent} hover:border-slate-700 transition-all`}>
               <div className="flex items-center justify-between mb-1">
                 <span className="text-[10px] font-mono font-semibold uppercase text-slate-400 tracking-wider">
                   {c.label}
                 </span>
-                <div className={`h-7 w-7 rounded-lg ${c.bgColor} border flex items-center justify-center ${c.color}`}>
+                <div className={`h-7 w-7 rounded-lg ${c.bgColor} border flex items-center justify-center ${c.color} shrink-0`}>
                   <Icon className="h-3.5 w-3.5" />
                 </div>
               </div>
 
               <div className="mt-1">
                 {c.isText ? (
-                  <div className="text-lg font-mono font-extrabold text-white tracking-tight truncate">
+                  <div className="text-base font-mono font-extrabold text-white tracking-tight truncate">
                     {c.textValue}
                   </div>
                 ) : (
@@ -121,7 +123,7 @@ export const ThreatSummaryCards: React.FC = () => {
                     <AnimatedCounter value={c.value || 0} />
                   </div>
                 )}
-                <span className="text-[9px] font-mono text-slate-500 block mt-0.5 truncate">
+                <span className="text-[9px] font-mono text-slate-400 block mt-0.5 truncate">
                   {c.subtext}
                 </span>
               </div>

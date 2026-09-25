@@ -13,7 +13,7 @@ import { PageTransition } from '@/components/ui/PageTransition';
 
 export default function LandingPage() {
   return (
-    <PageTransition className="min-h-screen bg-slate-950 flex flex-col justify-between">
+    <PageTransition className="min-h-screen bg-soc-dark flex flex-col justify-between">
       <Navbar />
       <main className="flex-grow">
         <HeroSection />

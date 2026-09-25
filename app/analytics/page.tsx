@@ -33,14 +33,12 @@ function AnalyticsContent() {
     threatDistribution,
   } = useSimulation();
 
-  // Dynamic Detection Source Counts
   const sourceStats = useMemo(() => {
     const realMlCount = threats.filter((t) => t.detectionSource === 'ml').length;
     const simulationCount = threats.filter((t) => t.detectionSource === 'simulation').length;
     return { realMlCount, simulationCount, total: threats.length };
   }, [threats]);
 
-  // Dynamic Severity Breakdown
   const severityStats = useMemo(() => {
     return {
       CRITICAL: threats.filter((t) => t.severity === 'CRITICAL').length,
@@ -50,65 +48,63 @@ function AnalyticsContent() {
     };
   }, [threats]);
 
-  // Severity Bar Chart Data
   const severityChartData = useMemo(() => {
     return [
-      { name: 'Critical', count: severityStats.CRITICAL, fill: '#f43f5e' },
+      { name: 'Critical', count: severityStats.CRITICAL, fill: '#ef4444' },
       { name: 'High', count: severityStats.HIGH, fill: '#f97316' },
       { name: 'Medium', count: severityStats.MEDIUM, fill: '#f59e0b' },
-      { name: 'Low', count: severityStats.LOW, fill: '#10b981' },
+      { name: 'Low', count: severityStats.LOW, fill: '#06b6d4' },
     ];
   }, [severityStats]);
 
-  // Threat Distribution (Excluding BENIGN)
   const threatTypeStats = useMemo(() => {
     return [
       { name: 'Port Scan', key: 'PORT_SCAN', count: threatDistribution.PORT_SCAN || 0, fill: '#f97316' },
-      { name: 'Denial of Service', key: 'DOS', count: (threatDistribution.DOS_DDOS || 0) + (threatDistribution.DOS || 0), fill: '#f43f5e' },
-      { name: 'Traffic Anomaly', key: 'ANOMALY', count: (threatDistribution.ANOMALY || 0) + (threatDistribution.TRAFFIC_ANOMALY || 0), fill: '#38bdf8' },
+      { name: 'Denial of Service', key: 'DOS', count: (threatDistribution.DOS_DDOS || 0) + (threatDistribution.DOS || 0), fill: '#ef4444' },
+      { name: 'Traffic Anomaly', key: 'ANOMALY', count: (threatDistribution.ANOMALY || 0) + (threatDistribution.TRAFFIC_ANOMALY || 0), fill: '#06b6d4' },
     ];
   }, [threatDistribution]);
 
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-xl flex flex-wrap items-center justify-between gap-4">
+      <div className="p-6 rounded-2xl bg-[#121925]/95 border border-slate-800/80 shadow-soc-panel flex flex-wrap items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800">
-              REAL-TIME SECURITY ANALYTICS
+            <span className="text-[10px] font-mono font-bold px-2.5 py-0.5 rounded bg-cyan-950/80 text-cyan-400 border border-cyan-500/40">
+              SECURITY ANALYTICS ENGINE
             </span>
-            <span className="text-[10px] font-mono text-slate-400">SOC METRIC ENGINE</span>
+            <span className="text-[10px] font-mono text-slate-400">SIH PS-145 METRICS</span>
           </div>
-          <h1 className="text-2xl font-extrabold text-white tracking-tight flex items-center gap-2">
-            <BarChart3 className="h-6 w-6 text-emerald-400" /> SECURITY & THREAT ANALYTICS DASHBOARD
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight flex items-center gap-2">
+            <BarChart3 className="h-7 w-7 text-cyan-400" /> SECURITY & THREAT ANALYTICS
           </h1>
         </div>
 
         {/* Quick Metrics Strip */}
-        <div className="flex items-center gap-6 font-mono text-right border-l border-slate-800 pl-6">
+        <div className="flex items-center gap-6 font-mono text-right border-l border-slate-800/80 pl-6">
           <div>
-            <span className="text-[10px] text-slate-500 block">TOTAL THREATS</span>
-            <span className="text-xl font-bold text-slate-100">{threats.length}</span>
+            <span className="text-[10px] text-slate-400 block">TOTAL THREATS</span>
+            <span className="text-2xl font-bold text-white">{threats.length}</span>
           </div>
           <div>
-            <span className="text-[10px] text-slate-500 block">REAL ML DETECTIONS</span>
-            <span className="text-xl font-bold text-emerald-400">{sourceStats.realMlCount}</span>
+            <span className="text-[10px] text-slate-400 block">REAL ML DETECTIONS</span>
+            <span className="text-2xl font-bold text-emerald-400">{sourceStats.realMlCount}</span>
           </div>
           <div>
-            <span className="text-[10px] text-slate-500 block">SIMULATION DETECTIONS</span>
-            <span className="text-xl font-bold text-slate-400">{sourceStats.simulationCount}</span>
+            <span className="text-[10px] text-slate-400 block">SIMULATION DETECTIONS</span>
+            <span className="text-2xl font-bold text-cyan-400">{sourceStats.simulationCount}</span>
           </div>
         </div>
       </div>
 
       {/* Empty State Banner if no threats */}
       {threats.length === 0 && (
-        <div className="p-8 rounded-2xl bg-slate-900/60 border border-slate-800 text-center font-mono space-y-2">
+        <div className="p-8 rounded-2xl bg-[#0F1623] border border-slate-800/80 text-center font-mono space-y-2">
           <ShieldAlert className="h-10 w-10 text-slate-600 mx-auto" />
-          <h3 className="text-sm font-bold text-slate-200 uppercase">NO SECURITY EVENTS DETECTED YET</h3>
+          <h3 className="text-sm font-bold text-slate-200 uppercase">NO ACTIVE SECURITY EVENTS</h3>
           <p className="text-xs text-slate-400 font-sans max-w-md mx-auto">
-            Analytics will populate dynamically as traffic streams and threat events are evaluated by the detection engine.
+            Analytics populate dynamically as unidirectional traffic streams and threat events are evaluated by the AI engine.
           </p>
         </div>
       )}
@@ -118,17 +114,17 @@ function AnalyticsContent() {
         
         {/* Traffic Velocity Time-Series */}
         <Card className="p-6 lg:col-span-2 space-y-4">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+          <div className="flex items-center justify-between border-b border-slate-800/80 pb-3">
             <div>
               <h3 className="text-xs font-mono font-bold text-slate-200 uppercase tracking-wider flex items-center gap-2">
-                <Activity className="h-4 w-4 text-emerald-400" /> UNIDIRECTIONAL PACKET VELOCITY TREND
+                <Activity className="h-4 w-4 text-cyan-400" /> PACKET VELOCITY TREND
               </h3>
               <p className="text-[11px] font-sans text-slate-400">
-                Real-time packets/sec throughput captured across ingress network interface
+                Real-time packets/sec throughput captured across unidirectional ingress interface
               </p>
             </div>
-            <span className="text-[10px] font-mono text-emerald-400 font-bold px-2 py-0.5 rounded bg-emerald-950 border border-emerald-800 flex items-center gap-1">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" /> LIVE STREAM
+            <span className="text-[10px] font-mono text-cyan-400 font-bold px-2.5 py-0.5 rounded bg-cyan-950/80 border border-cyan-500/40 flex items-center gap-1">
+              <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-pulse" /> LIVE STREAM
             </span>
           </div>
 
@@ -136,26 +132,27 @@ function AnalyticsContent() {
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={trafficChartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                 <defs>
-                  <linearGradient id="analyticsGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#10b981" stopOpacity={0.4} />
-                    <stop offset="95%" stopColor="#10b981" stopOpacity={0.0} />
+                  <linearGradient id="analyticsCyanGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#06b6d4" stopOpacity={0.35} />
+                    <stop offset="95%" stopColor="#06b6d4" stopOpacity={0.0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
-                <XAxis dataKey="time" stroke="#64748b" fontSize={10} tickLine={false} axisLine={false} />
-                <YAxis stroke="#64748b" fontSize={10} tickLine={false} axisLine={false} tickFormatter={(v) => `${(v/1000).toFixed(1)}k`} />
+                <XAxis dataKey="time" stroke="#64748b" fontSize={10} fontFamily="monospace" tickLine={false} axisLine={false} />
+                <YAxis stroke="#64748b" fontSize={10} fontFamily="monospace" tickLine={false} axisLine={false} tickFormatter={(v) => `${(v/1000).toFixed(1)}k`} />
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: '#0f172a',
+                    backgroundColor: '#121925',
                     borderColor: '#334155',
-                    borderRadius: '8px',
+                    borderRadius: '10px',
                     fontSize: '12px',
                     fontFamily: 'monospace',
                     color: '#f8fafc',
+                    boxShadow: '0 8px 32px rgba(0,0,0,0.5)',
                   }}
                   formatter={(val: any) => [`${val.toLocaleString()} pkt/s`, 'Packet Velocity']}
                 />
-                <Area type="monotone" dataKey="packetRate" stroke="#10b981" strokeWidth={2} fill="url(#analyticsGradient)" isAnimationActive={false} />
+                <Area type="monotone" dataKey="packetRate" stroke="#06b6d4" strokeWidth={2.5} fill="url(#analyticsCyanGradient)" isAnimationActive={false} />
               </AreaChart>
             </ResponsiveContainer>
           </div>
@@ -163,12 +160,12 @@ function AnalyticsContent() {
 
         {/* Threat Vector Distribution */}
         <Card className="p-6 space-y-4">
-          <div className="border-b border-slate-800 pb-3">
+          <div className="border-b border-slate-800/80 pb-3">
             <h3 className="text-xs font-mono font-bold text-slate-200 uppercase tracking-wider flex items-center gap-2">
-              <PieChart className="h-4 w-4 text-emerald-400" /> THREAT VECTOR BREAKDOWN
+              <PieChart className="h-4 w-4 text-cyan-400" /> THREAT VECTOR BREAKDOWN
             </h3>
             <p className="text-[11px] font-sans text-slate-400">
-              Categorized threat detections across supported taxonomy
+              Categorized threat detections across attack taxonomy
             </p>
           </div>
 
@@ -184,7 +181,7 @@ function AnalyticsContent() {
                       <span className="font-bold text-white">{pct}%</span>
                     </div>
                   </div>
-                  <div className="h-2 w-full rounded-full bg-slate-950 overflow-hidden border border-slate-800">
+                  <div className="h-2 w-full rounded-full bg-[#090D16] overflow-hidden border border-slate-800">
                     <div className="h-full rounded-full transition-all duration-500" style={{ width: `${Math.max(4, pct)}%`, backgroundColor: tt.fill }} />
                   </div>
                 </div>
@@ -192,8 +189,8 @@ function AnalyticsContent() {
             })}
 
             <div className="pt-3 border-t border-slate-800/80 text-[10px] text-slate-400 flex items-center justify-between">
-              <span>Active Category Filter:</span>
-              <span className="text-emerald-400 font-bold">PORT_SCAN | DOS | ANOMALY</span>
+              <span>Taxonomy Vectors:</span>
+              <span className="text-cyan-400 font-bold">PORT_SCAN | DOS | ANOMALY</span>
             </div>
           </div>
         </Card>
@@ -204,29 +201,30 @@ function AnalyticsContent() {
 
         {/* Severity Distribution */}
         <Card className="p-6 space-y-4">
-          <div className="border-b border-slate-800 pb-3">
+          <div className="border-b border-slate-800/80 pb-3">
             <h3 className="text-xs font-mono font-bold text-slate-200 uppercase tracking-wider flex items-center gap-2">
-              <ShieldAlert className="h-4 w-4 text-orange-400" /> SEVERITY RISK DISTRIBUTION
+              <ShieldAlert className="h-4 w-4 text-amber-400" /> SEVERITY RISK DISTRIBUTION
             </h3>
             <p className="text-[11px] font-sans text-slate-400">
-              Threat count grouped by operational SOC severity level
+              Threat count grouped by operational SOC severity rating
             </p>
           </div>
 
-          <div className="h-52 w-full">
+          <div className="h-56 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={severityChartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
-                <XAxis dataKey="name" stroke="#64748b" fontSize={11} tickLine={false} axisLine={false} />
-                <YAxis stroke="#64748b" fontSize={11} tickLine={false} axisLine={false} />
+                <XAxis dataKey="name" stroke="#64748b" fontSize={11} fontFamily="monospace" tickLine={false} axisLine={false} />
+                <YAxis stroke="#64748b" fontSize={11} fontFamily="monospace" tickLine={false} axisLine={false} />
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: '#0f172a',
+                    backgroundColor: '#121925',
                     borderColor: '#334155',
-                    borderRadius: '8px',
+                    borderRadius: '10px',
                     fontSize: '12px',
                     fontFamily: 'monospace',
                     color: '#f8fafc',
+                    boxShadow: '0 8px 32px rgba(0,0,0,0.5)',
                   }}
                 />
                 <Bar dataKey="count" radius={[4, 4, 0, 0]} />
@@ -237,12 +235,12 @@ function AnalyticsContent() {
 
         {/* Detection Source Analytics */}
         <Card className="p-6 space-y-4">
-          <div className="border-b border-slate-800 pb-3">
+          <div className="border-b border-slate-800/80 pb-3">
             <h3 className="text-xs font-mono font-bold text-slate-200 uppercase tracking-wider flex items-center gap-2">
-              <Layers className="h-4 w-4 text-emerald-400" /> DETECTION SOURCE ANALYTICS
+              <Layers className="h-4 w-4 text-cyan-400" /> DETECTION SOURCE ANALYTICS
             </h3>
             <p className="text-[11px] font-sans text-slate-400">
-              Categorized threat origins: Real ML Inference vs Controlled Simulation
+              Provenances: Real ML Inference vs Controlled Simulation
             </p>
           </div>
 
@@ -251,19 +249,19 @@ function AnalyticsContent() {
               <div className="flex items-center gap-1.5 text-xs text-emerald-400 font-bold">
                 <Cpu className="h-3.5 w-3.5" /> REAL ML INFERENCE
               </div>
-              <div className="text-2xl font-extrabold text-white">{sourceStats.realMlCount}</div>
+              <div className="text-3xl font-extrabold text-white">{sourceStats.realMlCount}</div>
               <p className="text-[10px] text-slate-400 font-sans leading-relaxed pt-1">
-                Inference executed by the UNSW-NB15-trained HistGradientBoosting model via FastAPI.
+                Inference executed by the UNSW-NB15 HistGradientBoosting model via FastAPI.
               </p>
             </div>
 
-            <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
-              <div className="flex items-center gap-1.5 text-xs text-slate-300 font-bold">
-                <Radio className="h-3.5 w-3.5 text-slate-400" /> DEMO SIMULATION
+            <div className="p-4 rounded-xl bg-[#090D16] border border-slate-800 space-y-1">
+              <div className="flex items-center gap-1.5 text-xs text-cyan-400 font-bold">
+                <Radio className="h-3.5 w-3.5 text-cyan-400" /> DEMO SIMULATION
               </div>
-              <div className="text-2xl font-extrabold text-slate-200">{sourceStats.simulationCount}</div>
+              <div className="text-3xl font-extrabold text-white">{sourceStats.simulationCount}</div>
               <p className="text-[10px] text-slate-400 font-sans leading-relaxed pt-1">
-                Controlled browser scenarios for demonstration, testing, and UI validation.
+                Controlled in-memory demonstration scenarios for validation.
               </p>
             </div>
           </div>
@@ -271,50 +269,50 @@ function AnalyticsContent() {
       </div>
 
       {/* Model Provenance & Performance Reference Panel */}
-      <Card className="p-6 space-y-4 bg-slate-900/90 border border-slate-800">
-        <div className="flex flex-wrap items-center justify-between border-b border-slate-800 pb-3 gap-2">
+      <Card className="p-6 space-y-4 bg-[#121925]/95 border border-slate-800/80">
+        <div className="flex flex-wrap items-center justify-between border-b border-slate-800/80 pb-3 gap-2">
           <h3 className="text-xs font-mono font-bold text-slate-200 uppercase tracking-wider flex items-center gap-2">
-            <Database className="h-4 w-4 text-emerald-400" /> ML MODEL PERFORMANCE & RESEARCH PROVENANCE
+            <Database className="h-4 w-4 text-cyan-400" /> ML MODEL PROVENANCE & RESEARCH METRICS
           </h3>
-          <span className="text-[10px] font-mono text-amber-400 font-bold px-2 py-0.5 rounded bg-amber-950 border border-amber-800">
+          <span className="text-[10px] font-mono text-amber-400 font-bold px-2.5 py-0.5 rounded bg-amber-950 border border-amber-800">
             RESEARCH PROTOTYPE
           </span>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 font-mono text-xs">
-          <div className="p-3 rounded-lg bg-slate-950 border border-slate-800">
-            <span className="text-[10px] text-slate-500 block">MODEL ARCHITECTURE</span>
+          <div className="p-3 rounded-xl bg-[#090D16] border border-slate-800">
+            <span className="text-[10px] text-slate-400 block">MODEL ARCHITECTURE</span>
             <span className="font-bold text-slate-200">HistGradientBoosting</span>
           </div>
 
-          <div className="p-3 rounded-lg bg-slate-950 border border-slate-800">
-            <span className="text-[10px] text-slate-500 block">BENCHMARK DATASET</span>
+          <div className="p-3 rounded-xl bg-[#090D16] border border-slate-800">
+            <span className="text-[10px] text-slate-400 block">BENCHMARK DATASET</span>
             <span className="font-bold text-slate-200">UNSW-NB15</span>
           </div>
 
-          <div className="p-3 rounded-lg bg-slate-950 border border-slate-800">
-            <span className="text-[10px] text-slate-500 block">TAXONOMY CLASSES</span>
+          <div className="p-3 rounded-xl bg-[#090D16] border border-slate-800">
+            <span className="text-[10px] text-slate-400 block">TAXONOMY CLASSES</span>
             <span className="font-bold text-slate-200">4 Classes</span>
           </div>
 
-          <div className="p-3 rounded-lg bg-slate-950 border border-slate-800">
-            <span className="text-[10px] text-slate-500 block">FEATURE DIMENSION</span>
+          <div className="p-3 rounded-xl bg-[#090D16] border border-slate-800">
+            <span className="text-[10px] text-slate-400 block">FEATURE DIMENSION</span>
             <span className="font-bold text-slate-200">9 Native Features</span>
           </div>
 
-          <div className="p-3 rounded-lg bg-slate-950 border border-slate-800">
-            <span className="text-[10px] text-slate-500 block">HELD-OUT MACRO F1</span>
+          <div className="p-3 rounded-xl bg-[#090D16] border border-slate-800">
+            <span className="text-[10px] text-slate-400 block">HELD-OUT MACRO F1</span>
             <span className="font-bold text-emerald-400">0.6288</span>
           </div>
 
-          <div className="p-3 rounded-lg bg-slate-950 border border-slate-800">
-            <span className="text-[10px] text-slate-500 block">HELD-OUT ACCURACY</span>
+          <div className="p-3 rounded-xl bg-[#090D16] border border-slate-800">
+            <span className="text-[10px] text-slate-400 block">HELD-OUT ACCURACY</span>
             <span className="font-bold text-emerald-400">74.40%</span>
           </div>
         </div>
 
         <p className="text-[11px] font-sans text-slate-400 border-t border-slate-800/80 pt-3">
-          * Evaluation metrics are based on a stratified held-out test set (25,072 samples) from the public UNSW-NB15 cybersecurity benchmark dataset. Results represent research prototype performance and are not based on live operational NTRO network telemetry.
+          * Evaluation metrics are grounded in a stratified held-out test set (25,072 samples) from the public UNSW-NB15 benchmark dataset.
         </p>
       </Card>
     </div>

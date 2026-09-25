@@ -18,7 +18,9 @@ export const TrafficMetricsStrip: React.FC = () => {
       suffix: ' pkt/s',
       subtext: 'Current Packet Velocity',
       icon: Activity,
-      color: 'text-emerald-400',
+      color: 'text-cyan-400',
+      bgColor: 'bg-cyan-950/60 border-cyan-800/60',
+      accent: 'border-l-cyan-500',
     },
     {
       label: 'BANDWIDTH',
@@ -28,6 +30,8 @@ export const TrafficMetricsStrip: React.FC = () => {
       subtext: 'Ingress Throughput',
       icon: HardDrive,
       color: 'text-sky-400',
+      bgColor: 'bg-sky-950/60 border-sky-800/60',
+      accent: 'border-l-sky-500',
     },
     {
       label: 'ACTIVE FLOWS',
@@ -35,6 +39,8 @@ export const TrafficMetricsStrip: React.FC = () => {
       subtext: 'Unidirectional IP Pairs',
       icon: Network,
       color: 'text-indigo-400',
+      bgColor: 'bg-indigo-950/60 border-indigo-800/60',
+      accent: 'border-l-indigo-500',
     },
     {
       label: 'TCP PROTOCOL',
@@ -43,14 +49,18 @@ export const TrafficMetricsStrip: React.FC = () => {
       subtext: 'Transmission Control',
       icon: Radio,
       color: 'text-emerald-400',
+      bgColor: 'bg-emerald-950/60 border-emerald-800/60',
+      accent: 'border-l-emerald-500',
     },
     {
       label: 'UDP PROTOCOL',
       value: metrics.protocolBreakdown.UDP,
       suffix: '%',
-      subtext: 'User Datagram',
+      subtext: 'User Datagram Stream',
       icon: Radio,
       color: 'text-amber-400',
+      bgColor: 'bg-amber-950/60 border-amber-800/60',
+      accent: 'border-l-amber-500',
     },
     {
       label: 'OTHER / ICMP',
@@ -59,6 +69,8 @@ export const TrafficMetricsStrip: React.FC = () => {
       subtext: 'Control & Telemetry',
       icon: Radio,
       color: 'text-slate-400',
+      bgColor: 'bg-slate-900 border-slate-800',
+      accent: 'border-l-slate-700',
     },
   ];
 
@@ -67,7 +79,7 @@ export const TrafficMetricsStrip: React.FC = () => {
       {items.map((item, i) => {
         const Icon = item.icon;
         return (
-          <Card key={i} className="p-3.5 flex flex-col justify-between hover:border-slate-700 transition-all">
+          <Card key={i} className={`p-3.5 flex flex-col justify-between border-l-4 ${item.accent} hover:border-slate-700 transition-all`}>
             <div className="flex items-center justify-between mb-1">
               <span className="text-[10px] font-mono font-semibold uppercase text-slate-400 tracking-wider">
                 {item.label}
@@ -83,7 +95,7 @@ export const TrafficMetricsStrip: React.FC = () => {
                   decimals={item.decimals || 0}
                 />
               </div>
-              <span className="text-[9px] font-mono text-slate-500 block mt-0.5">
+              <span className="text-[9px] font-mono text-slate-400 block mt-0.5 truncate">
                 {item.subtext}
               </span>
             </div>

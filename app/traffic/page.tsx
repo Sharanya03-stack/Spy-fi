@@ -30,27 +30,27 @@ function TrafficPageContent() {
   return (
     <div className="space-y-6">
       {/* Header Banner */}
-      <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-900">
+      <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-800/80">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="text-xs font-mono font-bold text-emerald-400 uppercase tracking-wide">
-              {isPaused ? '● PAUSED' : '● LIVE INGRESS FEED'}
+            <span className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse" />
+            <span className="text-xs font-mono font-bold text-cyan-400 uppercase tracking-wide">
+              {isPaused ? '● TELEMETRY PAUSED' : '● LIVE INGRESS FEED'}
             </span>
-            <Badge variant="normal" size="sm">
-              <Lock className="h-3 w-3 inline mr-1" /> ONE-WAY DATA DIODE
+            <Badge variant="cyan" size="sm">
+              <Lock className="h-3 w-3 inline mr-1" /> UNIDIRECTIONAL DIODE
             </Badge>
           </div>
-          <h1 className="text-2xl font-bold text-white tracking-tight">LIVE TRAFFIC MONITOR</h1>
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">LIVE TRAFFIC MONITOR</h1>
           <p className="text-xs text-slate-400 font-mono mt-0.5">
-            Real-time visibility into unidirectional network traffic entering the protected environment.
+            Real-time streaming visibility into unidirectional IP traffic entering the protected network.
           </p>
         </div>
 
-        <div className="flex items-center gap-3 px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs font-mono">
-          <span className="text-slate-400">Direction:</span>
-          <span className="text-emerald-400 font-bold flex items-center gap-1">
-            SOURCE NETWORK <Radio className="h-3.5 w-3.5" /> PROTECTED NETWORK
+        <div className="flex items-center gap-3 px-4 py-2 rounded-xl bg-[#0F1623] border border-slate-800 text-xs font-mono">
+          <span className="text-slate-400">Diode Isolation:</span>
+          <span className="text-cyan-400 font-bold flex items-center gap-1.5">
+            SOURCE NETWORK <Radio className="h-3.5 w-3.5 text-cyan-400 animate-pulse" /> PROTECTED NETWORK
           </span>
         </div>
       </div>

@@ -3,7 +3,7 @@
 import React from 'react';
 import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/Card';
 import { useSimulation } from '@/lib/simulation/simulationStore';
-import { Radar, Zap, KeyRound, Activity } from 'lucide-react';
+import { Radar, Zap, KeyRound, Activity, PieChart } from 'lucide-react';
 
 export const ThreatDistributionChart: React.FC = () => {
   const { threatDistribution, threats } = useSimulation();
@@ -13,7 +13,7 @@ export const ThreatDistributionChart: React.FC = () => {
   const categories = [
     {
       key: 'PORT_SCAN' as const,
-      label: 'Port Scan',
+      label: 'Port Scan Attack',
       count: threatDistribution.PORT_SCAN || 0,
       icon: Radar,
       color: 'bg-orange-500',
@@ -21,7 +21,7 @@ export const ThreatDistributionChart: React.FC = () => {
     },
     {
       key: 'DOS_DDOS' as const,
-      label: 'DoS / DDoS',
+      label: 'DoS / DDoS Flood',
       count: threatDistribution.DOS_DDOS || 0,
       icon: Zap,
       color: 'bg-rose-500',
@@ -29,7 +29,7 @@ export const ThreatDistributionChart: React.FC = () => {
     },
     {
       key: 'BRUTE_FORCE' as const,
-      label: 'Brute Force',
+      label: 'Brute Force Auth',
       count: threatDistribution.BRUTE_FORCE || 0,
       icon: KeyRound,
       color: 'bg-amber-500',
@@ -37,26 +37,27 @@ export const ThreatDistributionChart: React.FC = () => {
     },
     {
       key: 'ANOMALY' as const,
-      label: 'Traffic Anomaly',
+      label: 'Traffic Baseline Anomaly',
       count: threatDistribution.ANOMALY || 0,
       icon: Activity,
-      color: 'bg-sky-500',
-      textColor: 'text-sky-400',
+      color: 'bg-cyan-500',
+      textColor: 'text-cyan-400',
     },
   ];
 
   return (
     <Card className="p-6">
-      <CardHeader className="pb-2 mb-4">
-        <CardTitle className="text-base font-bold text-white">
-          THREAT DISTRIBUTION
+      <CardHeader className="pb-2 mb-4 border-b border-slate-800/60">
+        <CardTitle className="text-base font-bold text-white flex items-center gap-2">
+          <PieChart className="h-4 w-4 text-cyan-400" />
+          THREAT VECTOR DISTRIBUTION
         </CardTitle>
         <CardDescription className="text-xs text-slate-400 font-mono">
-          Proportion of detected threat vectors
+          Breakdown of detected attack categories
         </CardDescription>
       </CardHeader>
 
-      <div className="space-y-4">
+      <div className="space-y-4 mt-4">
         {categories.map((c) => {
           const Icon = c.icon;
           const percentage = Math.round((c.count / totalThreats) * 100);
@@ -75,9 +76,9 @@ export const ThreatDistributionChart: React.FC = () => {
               </div>
 
               {/* Progress bar */}
-              <div className="h-2 w-full rounded-full bg-slate-800 overflow-hidden">
+              <div className="h-2 w-full rounded-full bg-slate-900 border border-slate-800 overflow-hidden">
                 <div
-                  className={`h-full ${c.color} transition-all duration-500 rounded-full`}
+                  className={`h-full ${c.color} transition-all duration-500 rounded-full shadow-sm`}
                   style={{ width: `${Math.max(4, percentage)}%` }}
                 />
               </div>
@@ -86,9 +87,9 @@ export const ThreatDistributionChart: React.FC = () => {
         })}
       </div>
 
-      <div className="mt-6 pt-4 border-t border-slate-800 text-[11px] font-mono text-slate-400 flex items-center justify-between">
-        <span>Total Detected Vectors:</span>
-        <span className="text-slate-200 font-bold">{totalThreats}</span>
+      <div className="mt-6 pt-4 border-t border-slate-800/80 text-[11px] font-mono text-slate-400 flex items-center justify-between">
+        <span>Total Detected Events:</span>
+        <span className="text-slate-200 font-bold">{threats.length}</span>
       </div>
     </Card>
   );

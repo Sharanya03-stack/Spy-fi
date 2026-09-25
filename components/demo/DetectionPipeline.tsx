@@ -34,12 +34,12 @@ export const DetectionPipeline: React.FC<DetectionPipelineProps> = ({
   className,
 }) => {
   return (
-    <div className={cn('p-6 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-4', className)}>
-      <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+    <div className={cn('p-6 rounded-2xl bg-[#121925]/95 border border-slate-800/80 shadow-soc-panel space-y-4', className)}>
+      <div className="flex items-center justify-between border-b border-slate-800/80 pb-3">
         <h3 className="text-xs font-mono font-bold text-slate-200 uppercase tracking-wider flex items-center gap-2">
-          <Cpu className="h-4 w-4 text-emerald-400" /> END-TO-END DETECTION PIPELINE ARCHITECTURE
+          <Cpu className="h-4 w-4 text-cyan-400" /> END-TO-END DETECTION PIPELINE ARCHITECTURE
         </h3>
-        <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-800">
+        <span className="text-[10px] font-mono text-cyan-400 bg-cyan-950/80 px-2.5 py-0.5 rounded border border-cyan-500/40">
           UNIDIRECTIONAL IP TELEMETRY
         </span>
       </div>
@@ -56,10 +56,10 @@ export const DetectionPipeline: React.FC<DetectionPipelineProps> = ({
               className={cn(
                 'p-3 rounded-xl border flex flex-col justify-between transition-all duration-300 relative',
                 isActive
-                  ? 'bg-emerald-950/90 border-emerald-500 shadow-lg shadow-emerald-950/50 scale-[1.02]'
+                  ? 'bg-cyan-950/90 border-cyan-500 shadow-soc-glow scale-[1.02]'
                   : isPassed
-                  ? 'bg-slate-900/90 border-slate-700 text-slate-300'
-                  : 'bg-slate-950/60 border-slate-800/80 text-slate-500'
+                  ? 'bg-[#090D16] border-slate-700 text-slate-300'
+                  : 'bg-[#090D16]/60 border-slate-800/80 text-slate-500'
               )}
             >
               <div className="flex items-center justify-between mb-2">
@@ -68,7 +68,7 @@ export const DetectionPipeline: React.FC<DetectionPipelineProps> = ({
                   className={cn(
                     'p-1.5 rounded-lg',
                     isActive
-                      ? 'bg-emerald-500/20 text-emerald-300'
+                      ? 'bg-cyan-500/20 text-cyan-300'
                       : isPassed
                       ? 'bg-slate-800 text-slate-300'
                       : 'bg-slate-900 text-slate-600'
@@ -82,7 +82,7 @@ export const DetectionPipeline: React.FC<DetectionPipelineProps> = ({
                 <p
                   className={cn(
                     'text-[10px] font-mono font-bold uppercase leading-tight tracking-tight mb-1',
-                    isActive ? 'text-emerald-300' : isPassed ? 'text-slate-200' : 'text-slate-400'
+                    isActive ? 'text-cyan-300' : isPassed ? 'text-slate-200' : 'text-slate-400'
                   )}
                 >
                   {stage.label}
@@ -93,7 +93,7 @@ export const DetectionPipeline: React.FC<DetectionPipelineProps> = ({
               </div>
 
               {isActive && (
-                <div className="absolute -top-1 -right-1 h-2.5 w-2.5 rounded-full bg-emerald-400 animate-ping" />
+                <div className="absolute -top-1 -right-1 h-2.5 w-2.5 rounded-full bg-cyan-400 animate-ping" />
               )}
             </div>
           );

@@ -1,20 +1,30 @@
 import React from 'react';
 import { cn } from '@/lib/utils/cn';
+import { Severity } from '@/lib/types/network';
 
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   hoverable?: boolean;
   activeBorder?: boolean;
+  severityBorder?: Severity;
 }
 
 export const Card = React.forwardRef<HTMLDivElement, CardProps>(
-  ({ className, hoverable = false, activeBorder = false, children, ...props }, ref) => {
+  ({ className, hoverable = false, activeBorder = false, severityBorder, children, ...props }, ref) => {
+    const severityBorderStyles = {
+      CRITICAL: 'border-l-4 border-l-rose-500 border-t-slate-800/80 border-r-slate-800/80 border-b-slate-800/80',
+      HIGH: 'border-l-4 border-l-orange-500 border-t-slate-800/80 border-r-slate-800/80 border-b-slate-800/80',
+      MEDIUM: 'border-l-4 border-l-amber-500 border-t-slate-800/80 border-r-slate-800/80 border-b-slate-800/80',
+      LOW: 'border-l-4 border-l-sky-500 border-t-slate-800/80 border-r-slate-800/80 border-b-slate-800/80',
+    };
+
     return (
       <div
         ref={ref}
         className={cn(
-          'rounded-xl bg-slate-900/60 backdrop-blur-md border border-slate-800/80 shadow-soc-subtle p-6 transition-all duration-300 relative overflow-hidden',
-          hoverable && 'hover:border-slate-700 hover:shadow-lg hover:-translate-y-0.5',
-          activeBorder && 'border-emerald-500/40 shadow-soc-glow',
+          'rounded-xl bg-[#121925]/90 backdrop-blur-md border border-slate-800/80 shadow-soc-subtle p-6 transition-all duration-200 relative overflow-hidden',
+          hoverable && 'hover:border-slate-700/90 hover:shadow-soc-panel hover:-translate-y-0.5',
+          activeBorder && 'border-cyan-500/50 shadow-soc-glow',
+          severityBorder && severityBorderStyles[severityBorder],
           className
         )}
         {...props}
@@ -40,7 +50,7 @@ export const CardTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <h3
     ref={ref}
-    className={cn('text-lg font-semibold tracking-tight text-slate-100', className)}
+    className={cn('text-base sm:text-lg font-semibold tracking-tight text-slate-100 flex items-center gap-2', className)}
     {...props}
   />
 ));
@@ -50,7 +60,7 @@ export const CardDescription = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLParagraphElement>
 >(({ className, ...props }, ref) => (
-  <p ref={ref} className={cn('text-sm text-slate-400 leading-relaxed', className)} {...props} />
+  <p ref={ref} className={cn('text-xs sm:text-sm text-slate-400 leading-relaxed', className)} {...props} />
 ));
 CardDescription.displayName = 'CardDescription';
 

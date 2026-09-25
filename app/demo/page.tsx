@@ -72,16 +72,16 @@ function SihDemoContent() {
   return (
     <div className="space-y-6">
       {/* SIH Header Banner */}
-      <div className="p-6 rounded-2xl bg-gradient-to-r from-slate-900 via-slate-900/95 to-slate-950 border border-slate-800 shadow-2xl relative overflow-hidden">
-        <div className="absolute -right-12 -bottom-12 w-64 h-64 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="p-6 rounded-2xl bg-[#121925]/95 border border-slate-800/80 shadow-soc-panel relative overflow-hidden">
+        <div className="absolute -right-12 -bottom-12 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none" />
 
         <div className="flex flex-wrap items-center justify-between gap-4 relative z-10">
           <div>
             <div className="flex items-center gap-2 mb-2">
-              <span className="text-[10px] font-mono font-bold px-2.5 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800">
+              <span className="text-[10px] font-mono font-bold px-2.5 py-0.5 rounded bg-cyan-950/80 text-cyan-400 border border-cyan-500/40">
                 SMART INDIA HACKATHON 2026
               </span>
-              <span className="text-[10px] font-mono text-slate-400 border border-slate-800 px-2 py-0.5 rounded bg-slate-900">
+              <span className="text-[10px] font-mono text-slate-300 border border-slate-800 px-2 py-0.5 rounded bg-[#090D16]">
                 PROBLEM STATEMENT 145
               </span>
             </div>
@@ -95,15 +95,15 @@ function SihDemoContent() {
 
           {/* Mode & Health Pill */}
           <div className="flex flex-col items-end gap-2 font-mono">
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-800">
-              <Radio className={`h-3.5 w-3.5 ${isRealMl ? 'text-emerald-400 animate-pulse' : 'text-slate-400'}`} />
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#090D16] border border-slate-800">
+              <Radio className={`h-3.5 w-3.5 ${isRealMl ? 'text-emerald-400 animate-pulse' : 'text-cyan-400 animate-pulse'}`} />
               <span className="text-[11px] text-slate-400">DETECTION ENGINE:</span>
               {isRealMl ? (
                 <span className="text-[11px] font-bold text-emerald-400 flex items-center gap-1">
                   ● REAL ML INFERENCE (UNSW-NB15)
                 </span>
               ) : (
-                <span className="text-[11px] font-bold text-slate-300 flex items-center gap-1">
+                <span className="text-[11px] font-bold text-cyan-400 flex items-center gap-1">
                   ● DEMO SIMULATION
                 </span>
               )}
@@ -112,10 +112,10 @@ function SihDemoContent() {
             <div className="flex items-center gap-2 text-[10px]">
               <button
                 onClick={() => setDetectionMode('simulation')}
-                className={`px-2 py-0.5 rounded transition-colors ${
+                className={`px-2.5 py-0.5 rounded transition-colors ${
                   detectionMode === 'simulation'
-                    ? 'bg-slate-800 text-white font-bold'
-                    : 'text-slate-500 hover:text-slate-300'
+                    ? 'bg-cyan-950 text-cyan-400 font-bold border border-cyan-500/40'
+                    : 'text-slate-400 hover:text-slate-200'
                 }`}
               >
                 SIMULATION MODE
@@ -123,10 +123,10 @@ function SihDemoContent() {
               <span className="text-slate-700">|</span>
               <button
                 onClick={() => setDetectionMode('ml')}
-                className={`px-2 py-0.5 rounded transition-colors ${
+                className={`px-2.5 py-0.5 rounded transition-colors ${
                   detectionMode === 'ml'
-                    ? 'bg-emerald-950 text-emerald-400 font-bold border border-emerald-800'
-                    : 'text-slate-500 hover:text-slate-300'
+                    ? 'bg-emerald-950 text-emerald-400 font-bold border border-emerald-500/40'
+                    : 'text-slate-400 hover:text-slate-200'
                 }`}
               >
                 REAL ML MODE
@@ -137,12 +137,12 @@ function SihDemoContent() {
       </div>
 
       {/* Guided Step Progress Bar */}
-      <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800">
-        <div className="flex items-center justify-between text-xs font-mono mb-2">
-          <span className="text-slate-400 font-bold flex items-center gap-1.5">
+      <div className="p-4 rounded-xl bg-[#121925]/95 border border-slate-800/80">
+        <div className="flex items-center justify-between text-xs font-mono mb-2.5">
+          <span className="text-slate-300 font-bold flex items-center gap-1.5">
             <Sparkles className="h-3.5 w-3.5 text-amber-400" /> GUIDED DEMONSTRATION WORKFLOW
           </span>
-          <span className="text-slate-500 text-[10px]">STEP {activeStep + 1} OF 4</span>
+          <span className="text-slate-400 text-[10px]">STEP {activeStep + 1} OF 4</span>
         </div>
 
         <div className="grid grid-cols-4 gap-2 font-mono text-xs">
@@ -155,17 +155,17 @@ function SihDemoContent() {
             <button
               key={st.num}
               onClick={() => setActiveStep(idx)}
-              className={`p-3 rounded-lg border text-left transition-all ${
+              className={`p-3 rounded-xl border text-left transition-all ${
                 activeStep === idx
-                  ? 'bg-emerald-950/80 border-emerald-500 text-emerald-300 shadow-md shadow-emerald-950/40'
+                  ? 'bg-cyan-950/80 border-cyan-500 text-cyan-300 shadow-soc-glow'
                   : activeStep > idx
-                  ? 'bg-slate-900 border-slate-700 text-slate-200'
-                  : 'bg-slate-950/50 border-slate-800/80 text-slate-500'
+                  ? 'bg-[#090D16] border-slate-700 text-slate-200'
+                  : 'bg-[#090D16]/50 border-slate-800/80 text-slate-500'
               }`}
             >
               <div className="flex items-center justify-between">
                 <span className="text-[10px] font-bold opacity-60">{st.num}</span>
-                {activeStep > idx && <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />}
+                {activeStep > idx && <CheckCircle2 className="h-3.5 w-3.5 text-cyan-400" />}
               </div>
               <div className="font-bold tracking-tight text-xs mt-0.5">{st.title}</div>
               <div className="text-[10px] text-slate-400 font-sans mt-0.5 truncate">{st.desc}</div>
@@ -181,11 +181,11 @@ function SihDemoContent() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
         {/* Column 1 & 2: Scenario Selector */}
-        <Card className="p-6 lg:col-span-2 space-y-4">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+        <Card className="p-6 lg:col-span-2 space-y-4 bg-[#121925]/95 border-slate-800/80">
+          <div className="flex items-center justify-between border-b border-slate-800/80 pb-3">
             <div>
               <h3 className="text-xs font-mono font-bold text-slate-200 uppercase tracking-wider flex items-center gap-2">
-                <Layers className="h-4 w-4 text-emerald-400" /> DEMO SCENARIO SELECTOR
+                <Layers className="h-4 w-4 text-cyan-400" /> DEMO SCENARIO SELECTOR
               </h3>
               <p className="text-[11px] font-sans text-slate-400 mt-0.5">
                 Select a scenario to simulate traffic telemetry against the detection engine
@@ -194,7 +194,7 @@ function SihDemoContent() {
 
             <div className="flex items-center gap-2">
               <Button
-                variant="primary"
+                variant="cyan"
                 size="sm"
                 onClick={handleStartDemoFlow}
                 leftIcon={<Play className="h-3.5 w-3.5 text-amber-300" />}
@@ -219,8 +219,8 @@ function SihDemoContent() {
               onClick={() => handleRunScenario('NORMAL')}
               className={`p-4 rounded-xl border cursor-pointer transition-all ${
                 activeScenario === 'NORMAL'
-                  ? 'bg-slate-800/90 border-emerald-500 shadow-md ring-1 ring-emerald-500/50'
-                  : 'bg-slate-950/60 border-slate-800 hover:border-slate-700'
+                  ? 'bg-[#152030] border-emerald-500 shadow-soc-glow'
+                  : 'bg-[#090D16] border-slate-800 hover:border-slate-700'
               }`}
             >
               <div className="flex items-center justify-between mb-2">
@@ -243,8 +243,8 @@ function SihDemoContent() {
               onClick={() => handleRunScenario('PORT_SCAN', 'PORT_SCAN')}
               className={`p-4 rounded-xl border cursor-pointer transition-all ${
                 activeScenario === 'PORT_SCAN'
-                  ? 'bg-orange-950/40 border-orange-500 shadow-md ring-1 ring-orange-500/50'
-                  : 'bg-slate-950/60 border-slate-800 hover:border-slate-700'
+                  ? 'bg-orange-950/40 border-orange-500 shadow-soc-subtle'
+                  : 'bg-[#090D16] border-slate-800 hover:border-slate-700'
               }`}
             >
               <div className="flex items-center justify-between mb-2">
@@ -267,8 +267,8 @@ function SihDemoContent() {
               onClick={() => handleRunScenario('DOS', 'DOS_DDOS')}
               className={`p-4 rounded-xl border cursor-pointer transition-all ${
                 activeScenario === 'DOS'
-                  ? 'bg-rose-950/40 border-rose-500 shadow-md ring-1 ring-rose-500/50'
-                  : 'bg-slate-950/60 border-slate-800 hover:border-slate-700'
+                  ? 'bg-rose-950/40 border-rose-500 shadow-soc-alert'
+                  : 'bg-[#090D16] border-slate-800 hover:border-slate-700'
               }`}
             >
               <div className="flex items-center justify-between mb-2">
@@ -291,8 +291,8 @@ function SihDemoContent() {
               onClick={() => handleRunScenario('TRAFFIC_ANOMALY', 'TRAFFIC_ANOMALY')}
               className={`p-4 rounded-xl border cursor-pointer transition-all ${
                 activeScenario === 'TRAFFIC_ANOMALY'
-                  ? 'bg-amber-950/40 border-amber-500 shadow-md ring-1 ring-amber-500/50'
-                  : 'bg-slate-950/60 border-slate-800 hover:border-slate-700'
+                  ? 'bg-amber-950/40 border-amber-500 shadow-soc-subtle'
+                  : 'bg-[#090D16] border-slate-800 hover:border-slate-700'
               }`}
             >
               <div className="flex items-center justify-between mb-2">
@@ -313,10 +313,10 @@ function SihDemoContent() {
         </Card>
 
         {/* Column 3: Live Evidence & Active Threat Preview */}
-        <Card className="p-6 space-y-4">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+        <Card className="p-6 space-y-4 bg-[#121925]/95 border-slate-800/80">
+          <div className="flex items-center justify-between border-b border-slate-800/80 pb-3">
             <h3 className="text-xs font-mono font-bold text-slate-200 uppercase tracking-wider flex items-center gap-2">
-              <Search className="h-4 w-4 text-emerald-400" /> EVIDENCE PREVIEW
+              <Search className="h-4 w-4 text-cyan-400" /> EVIDENCE PREVIEW
             </h3>
             {activeThreat && (
               <span className="text-[10px] font-mono text-slate-400">{activeThreat.id}</span>
@@ -327,14 +327,14 @@ function SihDemoContent() {
             <div className="py-10 text-center font-mono space-y-2">
               <Activity className="h-8 w-8 text-emerald-400 mx-auto animate-pulse" />
               <p className="text-xs text-slate-300 font-bold">NORMAL TRAFFIC FLOWING</p>
-              <p className="text-[11px] text-slate-500 font-sans max-w-xs mx-auto">
+              <p className="text-[11px] text-slate-400 font-sans max-w-xs mx-auto">
                 No anomalous threats detected in current baseline telemetry stream.
               </p>
             </div>
           ) : activeThreat ? (
             <div className="space-y-3 font-mono text-xs">
-              <div className="p-3 rounded-lg bg-slate-950 border border-slate-800 space-y-1">
-                <div className="text-[10px] text-slate-500 uppercase">AI RESULT</div>
+              <div className="p-3 rounded-xl bg-[#090D16] border border-slate-800 space-y-1">
+                <div className="text-[10px] text-slate-400 uppercase">AI RESULT</div>
                 <div className="text-sm font-extrabold text-white flex items-center justify-between">
                   <span>{activeThreat.title}</span>
                   <Badge severity={activeThreat.severity} size="sm" dot />
@@ -342,26 +342,26 @@ function SihDemoContent() {
               </div>
 
               <div className="grid grid-cols-2 gap-2">
-                <div className="p-2.5 rounded bg-slate-950 border border-slate-800">
-                  <span className="text-[10px] text-slate-500 block">AI CONFIDENCE</span>
-                  <span className="text-sm font-bold text-emerald-400">{activeThreat.confidence}%</span>
+                <div className="p-3 rounded-xl bg-[#090D16] border border-slate-800">
+                  <span className="text-[10px] text-slate-400 block">AI CONFIDENCE</span>
+                  <span className="text-sm font-bold text-cyan-400">{activeThreat.confidence}%</span>
                 </div>
 
-                <div className="p-2.5 rounded bg-slate-950 border border-slate-800">
-                  <span className="text-[10px] text-slate-500 block">RISK SCORE</span>
-                  <span className="text-sm font-bold text-orange-400">{activeThreat.riskScore} / 100</span>
+                <div className="p-3 rounded-xl bg-[#090D16] border border-slate-800">
+                  <span className="text-[10px] text-slate-400 block">RISK SCORE</span>
+                  <span className="text-sm font-bold text-amber-400">{activeThreat.riskScore} / 100</span>
                 </div>
               </div>
 
-              <div className="p-3 rounded-lg bg-slate-950 border border-slate-800 text-[11px] text-slate-300 space-y-1">
-                <div><span className="text-slate-500">SOURCE:</span> {activeThreat.sourceIp}</div>
-                <div><span className="text-slate-500">DEST:</span> {activeThreat.destinationIp}</div>
-                <div><span className="text-slate-500">ENGINE:</span> {activeThreat.detectionSource === 'ml' ? 'REAL ML (UNSW-NB15)' : 'DEMO SIMULATION'}</div>
+              <div className="p-3 rounded-xl bg-[#090D16] border border-slate-800 text-[11px] text-slate-300 space-y-1">
+                <div><span className="text-slate-400">SOURCE:</span> {activeThreat.sourceIp}</div>
+                <div><span className="text-slate-400">DEST:</span> {activeThreat.destinationIp}</div>
+                <div><span className="text-slate-400">ENGINE:</span> {activeThreat.detectionSource === 'ml' ? 'REAL ML (UNSW-NB15)' : 'DEMO SIMULATION'}</div>
               </div>
 
               <Link href={`/threats/${activeThreat.id}`} className="block">
                 <Button
-                  variant="primary"
+                  variant="cyan"
                   size="sm"
                   className="w-full"
                   rightIcon={<ArrowRight className="h-4 w-4" />}
@@ -374,61 +374,11 @@ function SihDemoContent() {
         </Card>
       </div>
 
-      {/* Live Attack Unidirectional Visualizer */}
-      <Card className="p-6 space-y-4">
-        <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-          <h3 className="text-xs font-mono font-bold text-slate-200 uppercase tracking-wider flex items-center gap-2">
-            <Lock className="h-4 w-4 text-emerald-400" /> UNIDIRECTIONAL TOPOLOGY SCHEMATIC (ONE-WAY TELEMETRY)
-          </h3>
-          <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950 px-2 py-0.5 rounded border border-emerald-800">
-            STRICT HARDWARE ENFORCED DIRECTION
-          </span>
-        </div>
-
-        <div className="py-6 px-4 rounded-xl bg-slate-950 border border-slate-900 relative">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-center font-mono text-center text-xs">
-            
-            {/* Node 1: Untrusted Source */}
-            <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
-              <span className="text-[10px] text-slate-500 uppercase block font-bold">NODE 01</span>
-              <span className="text-slate-200 font-bold block">UNTRUSTED SOURCE</span>
-              <span className="text-[10px] text-slate-400 font-sans block">External IP Ingress</span>
-            </div>
-
-            {/* Node 2: Telemetry Flow */}
-            <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1 relative">
-              <span className="text-[10px] text-slate-500 uppercase block font-bold">DIRECTIONAL FLOW</span>
-              <span className={`font-bold block ${activeScenario === 'NORMAL' ? 'text-emerald-400' : 'text-rose-400 animate-pulse'}`}>
-                {activeScenario === 'NORMAL' ? 'NORMAL FLOW ──────►' : 'SUSPICIOUS FLOW ───►'}
-              </span>
-              <span className="text-[10px] text-slate-400 font-sans block">One-Way Transmission</span>
-            </div>
-
-            {/* Node 3: AI Engine */}
-            <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
-              <span className="text-[10px] text-slate-500 uppercase block font-bold">NODE 02</span>
-              <span className="text-emerald-400 font-bold block">SPY-FI AI ENGINE</span>
-              <span className="text-[10px] text-slate-400 font-sans block">
-                {isRealMl ? 'HistGradientBoosting ML' : 'Simulation Engine'}
-              </span>
-            </div>
-
-            {/* Node 4: Protected Zone */}
-            <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
-              <span className="text-[10px] text-slate-500 uppercase block font-bold">NODE 03</span>
-              <span className="text-slate-200 font-bold block">PROTECTED PERIMETER</span>
-              <span className="text-[10px] text-slate-400 font-sans block">Isolated Internal Zone</span>
-            </div>
-
-          </div>
-        </div>
-      </Card>
-
       {/* PS-145 Problem Statement Alignment Panel */}
-      <Card className="p-6 space-y-4">
-        <div className="border-b border-slate-800 pb-3">
+      <Card className="p-6 space-y-4 bg-[#121925]/95 border-slate-800/80">
+        <div className="border-b border-slate-800/80 pb-3">
           <h3 className="text-xs font-mono font-bold text-slate-200 uppercase tracking-wider flex items-center gap-2">
-            <FileText className="h-4 w-4 text-emerald-400" /> HOW SPY-FI ADDRESSES PROBLEM STATEMENT 145
+            <FileText className="h-4 w-4 text-cyan-400" /> HOW SPY-FI ADDRESSES PROBLEM STATEMENT 145
           </h3>
           <p className="text-xs font-sans text-slate-400 mt-1">
             Smart India Hackathon 2026 — AI-Based Detection of Cyber Threats in Unidirectional IP Network Traffic
@@ -436,48 +386,48 @@ function SihDemoContent() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 font-mono text-xs">
-          <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
-            <div className="text-[10px] text-emerald-400 font-bold">01 — UNIDIRECTIONAL TELEMETRY</div>
+          <div className="p-4 rounded-xl bg-[#090D16] border border-slate-800 space-y-1.5">
+            <div className="text-[10px] text-cyan-400 font-bold">01 — UNIDIRECTIONAL TELEMETRY</div>
             <div className="text-slate-200 font-bold">One-Way Flow Ingestion</div>
             <p className="text-slate-400 font-sans text-xs leading-relaxed">
               Designed around strictly unidirectional IP flow telemetry captured from untrusted network boundaries without backward transmissions.
             </p>
           </div>
 
-          <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
-            <div className="text-[10px] text-emerald-400 font-bold">02 — FEATURE EXTRACTION</div>
+          <div className="p-4 rounded-xl bg-[#090D16] border border-slate-800 space-y-1.5">
+            <div className="text-[10px] text-cyan-400 font-bold">02 — FEATURE EXTRACTION</div>
             <div className="text-slate-200 font-bold">9 Native Flow Features</div>
             <p className="text-slate-400 font-sans text-xs leading-relaxed">
               Transforms raw flow records into 9 native features (packet counts, flow duration, rate, bytes/sec, ports, and protocol).
             </p>
           </div>
 
-          <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
-            <div className="text-[10px] text-emerald-400 font-bold">03 — AI DETECTION</div>
+          <div className="p-4 rounded-xl bg-[#090D16] border border-slate-800 space-y-1.5">
+            <div className="text-[10px] text-cyan-400 font-bold">03 — AI DETECTION</div>
             <div className="text-slate-200 font-bold">UNSW-NB15 Trained Model</div>
             <p className="text-slate-400 font-sans text-xs leading-relaxed">
               Classifies network flows using a supervised HistGradientBoosting model trained on 257,673 authentic UNSW-NB15 records.
             </p>
           </div>
 
-          <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
-            <div className="text-[10px] text-emerald-400 font-bold">04 — EXPLAINABILITY</div>
+          <div className="p-4 rounded-xl bg-[#090D16] border border-slate-800 space-y-1.5">
+            <div className="text-[10px] text-cyan-400 font-bold">04 — EXPLAINABILITY</div>
             <div className="text-slate-200 font-bold">Baseline Deviation XAI</div>
             <p className="text-slate-400 font-sans text-xs leading-relaxed">
               Provides baseline deviation statistics against benign training metrics so analysts understand why alerts were triggered.
             </p>
           </div>
 
-          <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
-            <div className="text-[10px] text-emerald-400 font-bold">05 — RISK ASSESSMENT</div>
+          <div className="p-4 rounded-xl bg-[#090D16] border border-slate-800 space-y-1.5">
+            <div className="text-[10px] text-cyan-400 font-bold">05 — RISK ASSESSMENT</div>
             <div className="text-slate-200 font-bold">Decoupled SOC Policy</div>
             <p className="text-slate-400 font-sans text-xs leading-relaxed">
               Combines raw model confidence and suspicion scores with operational SOC policy to assign severity levels transparently.
             </p>
           </div>
 
-          <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
-            <div className="text-[10px] text-emerald-400 font-bold">06 — ANALYST RESPONSE</div>
+          <div className="p-4 rounded-xl bg-[#090D16] border border-slate-800 space-y-1.5">
+            <div className="text-[10px] text-cyan-400 font-bold">06 — ANALYST RESPONSE</div>
             <div className="text-slate-200 font-bold">Phased Advisory Guidance</div>
             <p className="text-slate-400 font-sans text-xs leading-relaxed">
               Offers non-destructive advisory response steps across 4 operational phases, keeping human SOC analysts strictly in control.
