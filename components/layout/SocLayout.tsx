@@ -6,13 +6,16 @@ import { SocSidebar } from './SocSidebar';
 import { ToastContainer } from '@/components/ui/Toast';
 import { useSimulation } from '@/lib/simulation/simulationStore';
 import { PageTransition } from '@/components/ui/PageTransition';
+import { SocNetworkBackground } from '@/components/ui/SocNetworkBackground';
 
 export const SocLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { activeToast, dismissToast } = useSimulation();
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[#080B12] text-slate-100 flex flex-col font-sans selection:bg-cyan-500/30 selection:text-cyan-200">
+    <div className="min-h-screen bg-[#080B12] text-slate-100 flex flex-col font-sans selection:bg-cyan-500/30 selection:text-cyan-200 relative overflow-x-hidden">
+      {/* Live Animated Network Intelligence Mesh Background */}
+      <SocNetworkBackground variant="dashboard" />
       {/* Left Sidebar */}
       <SocSidebar
         isOpen={isMobileSidebarOpen}

@@ -10,10 +10,12 @@ import { ExplainableAiSection } from '@/components/landing/ExplainableAiSection'
 import { SocWorkflowSection } from '@/components/landing/SocWorkflowSection';
 import { FinalCtaSection } from '@/components/landing/FinalCtaSection';
 import { PageTransition } from '@/components/ui/PageTransition';
+import { SocNetworkBackground } from '@/components/ui/SocNetworkBackground';
 
 export default function LandingPage() {
   return (
-    <PageTransition className="min-h-screen bg-soc-dark flex flex-col justify-between">
+    <PageTransition className="min-h-screen bg-soc-dark flex flex-col justify-between relative overflow-x-hidden">
+      <SocNetworkBackground variant="landing" />
       <Navbar />
       <main className="flex-grow">
         <HeroSection />
