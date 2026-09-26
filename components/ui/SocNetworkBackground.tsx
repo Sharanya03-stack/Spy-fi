@@ -48,10 +48,10 @@ export const SocNetworkBackground: React.FC<SocNetworkBackgroundProps> = ({
 
     // Parameters based on variant
     const isLanding = variant === 'landing';
-    const nodeCount = isLanding ? Math.floor(width / 32) : Math.floor(width / 48);
-    const connectionDist = isLanding ? 180 : 150;
-    const maxParticles = isLanding ? 14 : 8;
-    const opacityMultiplier = isLanding ? 0.85 : 0.55;
+    const nodeCount = isLanding ? Math.floor(width / 30) : Math.floor(width / 45);
+    const connectionDist = isLanding ? 185 : 155;
+    const maxParticles = isLanding ? 15 : 9;
+    const opacityMultiplier = isLanding ? 0.95 : 0.65;
 
     // Generate network nodes
     const nodes: Node[] = [];
@@ -81,7 +81,7 @@ export const SocNetworkBackground: React.FC<SocNetworkBackgroundProps> = ({
       nodes.push({
         x,
         y,
-        baseRadius: Math.random() * 1.5 + 1.0,
+        baseRadius: Math.random() * 1.8 + 1.2,
         phase: Math.random() * Math.PI * 2,
         pulseSpeed: 0.008 + Math.random() * 0.012,
         neighbors: [],
@@ -123,7 +123,7 @@ export const SocNetworkBackground: React.FC<SocNetworkBackgroundProps> = ({
 
       const choice = validNodes[Math.floor(Math.random() * validNodes.length)];
       // Color scheme: Cyan (telemetry) primary, subtle violet (AI) secondary
-      const isViolet = Math.random() > 0.8;
+      const isViolet = Math.random() > 0.85;
       const color = isViolet
         ? 'rgba(139, 92, 246, ' // Violet
         : 'rgba(6, 182, 212, '; // Cyan
@@ -134,7 +134,7 @@ export const SocNetworkBackground: React.FC<SocNetworkBackgroundProps> = ({
         progress: 0,
         speed: (0.004 + Math.random() * 0.008) * (isLanding ? 1.3 : 1.0),
         color,
-        size: Math.random() * 1.2 + 1.2,
+        size: Math.random() * 1.4 + 1.5,
       });
     };
 
@@ -144,10 +144,8 @@ export const SocNetworkBackground: React.FC<SocNetworkBackgroundProps> = ({
     }
 
     let spawnTimer = 0;
-    let time = 0;
 
     const render = () => {
-      time += 1;
       ctx.clearRect(0, 0, width, height);
 
       // 1. Subtle Background Grid Pattern
@@ -167,13 +165,13 @@ export const SocNetworkBackground: React.FC<SocNetworkBackgroundProps> = ({
 
       // 2. Soft Ambient Radial Glows (Cyan left/top, Violet right/bottom)
       const cyanGlow = ctx.createRadialGradient(width * 0.15, height * 0.25, 0, width * 0.15, height * 0.25, width * 0.4);
-      cyanGlow.addColorStop(0, `rgba(6, 182, 212, ${0.04 * opacityMultiplier})`);
+      cyanGlow.addColorStop(0, `rgba(6, 182, 212, ${0.05 * opacityMultiplier})`);
       cyanGlow.addColorStop(1, 'rgba(8, 11, 18, 0)');
       ctx.fillStyle = cyanGlow;
       ctx.fillRect(0, 0, width, height);
 
       const violetGlow = ctx.createRadialGradient(width * 0.85, height * 0.75, 0, width * 0.85, height * 0.75, width * 0.4);
-      violetGlow.addColorStop(0, `rgba(139, 92, 246, ${0.03 * opacityMultiplier})`);
+      violetGlow.addColorStop(0, `rgba(139, 92, 246, ${0.04 * opacityMultiplier})`);
       violetGlow.addColorStop(1, 'rgba(8, 11, 18, 0)');
       ctx.fillStyle = violetGlow;
       ctx.fillRect(0, 0, width, height);
@@ -187,7 +185,7 @@ export const SocNetworkBackground: React.FC<SocNetworkBackgroundProps> = ({
             const dx = nodeB.x - nodeA.x;
             const dy = nodeB.y - nodeA.y;
             const dist = Math.sqrt(dx * dx + dy * dy);
-            const lineAlpha = (1 - dist / connectionDist) * 0.08 * opacityMultiplier;
+            const lineAlpha = (1 - dist / connectionDist) * 0.09 * opacityMultiplier;
 
             ctx.strokeStyle = `rgba(51, 65, 85, ${lineAlpha})`;
             ctx.lineWidth = 0.75;
@@ -204,7 +202,7 @@ export const SocNetworkBackground: React.FC<SocNetworkBackgroundProps> = ({
         const node = nodes[i];
         node.phase += node.pulseSpeed;
         const breath = (Math.sin(node.phase) + 1) / 2; // 0 to 1
-        const alpha = (0.15 + breath * 0.25) * opacityMultiplier * (node.isCenter ? 0.4 : 1.0);
+        const alpha = (0.22 + breath * 0.35) * opacityMultiplier * (node.isCenter ? 0.4 : 1.0);
 
         ctx.fillStyle = `rgba(6, 182, 212, ${alpha})`;
         ctx.beginPath();
@@ -215,7 +213,7 @@ export const SocNetworkBackground: React.FC<SocNetworkBackgroundProps> = ({
       // 5. Draw & Update Unidirectional Telemetry Particles (if not reduced motion)
       if (!prefersReducedMotion) {
         spawnTimer++;
-        if (spawnTimer > 40) {
+        if (spawnTimer > 35) {
           spawnParticle();
           spawnTimer = 0;
         }
@@ -235,15 +233,34 @@ export const SocNetworkBackground: React.FC<SocNetworkBackgroundProps> = ({
           const currY = nodeA.y + (nodeB.y - nodeA.y) * p.progress;
 
           // Pulse opacity trail
-          const pulseAlpha = Math.sin(p.progress * Math.PI) * 0.75 * opacityMultiplier;
+          const pulseAlpha = Math.sin(p.progress * Math.PI) * 0.95 * opacityMultiplier;
+
+          // Directional tail line behind particle indicating unidirectional flow
+          const tailVectorX = (nodeB.x - nodeA.x) * 0.09;
+          const tailVectorY = (nodeB.y - nodeA.y) * 0.09;
+          const tailGradient = ctx.createLinearGradient(
+            currX,
+            currY,
+            currX - tailVectorX,
+            currY - tailVectorY
+          );
+          tailGradient.addColorStop(0, `${p.color}${pulseAlpha * 0.85})`);
+          tailGradient.addColorStop(1, `${p.color}0)`);
+
+          ctx.strokeStyle = tailGradient;
+          ctx.lineWidth = p.size * 1.1;
+          ctx.beginPath();
+          ctx.moveTo(currX, currY);
+          ctx.lineTo(currX - tailVectorX, currY - tailVectorY);
+          ctx.stroke();
 
           // Glow around particle
-          const pGlow = ctx.createRadialGradient(currX, currY, 0, currX, currY, p.size * 4);
+          const pGlow = ctx.createRadialGradient(currX, currY, 0, currX, currY, p.size * 4.5);
           pGlow.addColorStop(0, `${p.color}${pulseAlpha})`);
           pGlow.addColorStop(1, `${p.color}0)`);
           ctx.fillStyle = pGlow;
           ctx.beginPath();
-          ctx.arc(currX, currY, p.size * 4, 0, Math.PI * 2);
+          ctx.arc(currX, currY, p.size * 4.5, 0, Math.PI * 2);
           ctx.fill();
 
           // Particle core
